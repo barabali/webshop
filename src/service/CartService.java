@@ -40,4 +40,23 @@ public class CartService {
 		cartRepository.deleteById(cartId);
 	}
 	
+	public Map<Product, Integer> showCart(long cartId){
+		Cart cart = cartRepository.findById(cartId);
+		return cart.getProducts();
+	}
+	
+	public void changeNumberInCart(long cartId,long productId,int amount){
+		Cart cart = cartRepository.findById(cartId);
+		Product product = productRepository.findById(productId);
+		cart.setProductAmount(product, amount);
+		cartRepository.update(cart);
+	}
+	
+	public void deleteCart(long cartId){
+		Cart cart = cartRepository.findById(cartId);
+		cart.clear();
+		cartRepository.update(cart);
+	}
+
+	
 }

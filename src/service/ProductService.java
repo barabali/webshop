@@ -17,5 +17,13 @@ public class ProductService {
 		return productRepository.findByCategoryId(categoryId);
 	}
 	
+	public List<Product> searchProductByName(String expression){
+		return productRepository.searchByName(expression);
+	}
+	
+	public List<Product> searchProductByMinMax(int min,int max){
+		return productRepository.searchByMinMax(min,max);
+	}
+
 	
 }

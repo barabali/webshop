@@ -8,4 +8,9 @@ public interface ProductRepository extends Repository<Product>{
 
 	public List<Product> findByCategoryId(long categoryId);
 	
+	public List<Product> searchByName(String expression);
+
+	public List<Product> searchByMinMax(int min, int max);
+
+	
 }
