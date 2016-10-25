@@ -33,5 +33,16 @@ public class UserService {
 		return user;
 	}
 	
+	public boolean changePassword(String email,String newpassword){
+		User user = userRepository.findByEmail(email);
+		if(user == null) {
+			return false;
+		}
+		user.setPassword(newpassword);
+		userRepository.update(user);
+		return true;
+	}
+
+	
 	
 }
