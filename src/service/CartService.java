@@ -2,7 +2,7 @@ package service;
 
 import model.Cart;
 import model.Product;
-import order.Order;
+import model.order.Order;
 import repository.CartRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
