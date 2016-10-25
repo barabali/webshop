@@ -3,6 +3,7 @@ package model;
 import java.util.Map;
 
 import model.user.User;
+import order.Order;
 
 public class Cart {
 

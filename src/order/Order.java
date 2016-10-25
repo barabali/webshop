@@ -1,7 +1,8 @@
-package model;
+package order;
 
 import java.util.Map;
 
+import model.Product;
 import model.user.User;
 
 public class Order {
@@ -9,6 +10,15 @@ public class Order {
 	private Long id;
 	private User user;
 	private Map<Product, Integer> products;
+	private OrderStatus order;
+
+	public OrderStatus getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderStatus order) {
+		this.order = order;
+	}
 
 	public Order(User user, Map<Product, Integer> products) {
 		this.user = user;

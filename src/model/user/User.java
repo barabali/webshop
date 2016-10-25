@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.Order;
+import order.Order;
 
 public class User {
 

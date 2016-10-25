@@ -2,8 +2,8 @@ package repository;
 
 import java.util.List;
 
-import model.Order;
 import model.user.User;
+import order.Order;
 
 public interface UserRepository extends Repository<User> {
 	

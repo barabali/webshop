@@ -1,8 +1,8 @@
 package service;
 
 import model.Cart;
-import model.Order;
 import model.Product;
+import order.Order;
 import repository.CartRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
