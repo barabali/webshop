@@ -12,5 +12,5 @@ public interface ProductRepository extends Repository<Product>{
 
 	public List<Product> searchByMinMax(int min, int max);
 
-	
+	public boolean deleteByCategoryId(long categoryId);
 }
