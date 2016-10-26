@@ -6,6 +6,11 @@ public class Category {
 	private String name;
 	private Discount discount;
 
+	public Category(String name) {
+		this.name = name;
+		discount=new Discount("0.0");
+	}
+
 	public Discount getDiscount() {
 		return discount;
 	}

@@ -5,6 +5,10 @@ import java.util.Date;
 
 public class TimedDiscount extends Discount {
 
+	public TimedDiscount(String value) {
+		super(value);
+	}
+
 	private Date expiresAt;
 
 	public Date getExpiresAt() {
