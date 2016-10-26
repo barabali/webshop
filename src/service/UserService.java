@@ -1,5 +1,8 @@
 package service;
 
+import java.util.List;
+
+import model.order.Order;
 import model.user.Role;
 import model.user.User;
 import repository.UserRepository;
@@ -33,7 +36,7 @@ public class UserService {
 		return user;
 	}
 	
-	public boolean changePassword(String email,String newpassword){
+	public boolean admin_changePassword(String email,String newpassword){
 		User user = userRepository.findByEmail(email);
 		if(user == null) {
 			return false;
@@ -43,6 +46,18 @@ public class UserService {
 		return true;
 	}
 
+	public List<Order> getPreviousOrders(long user_id){
+		return userRepository.getPreviousOrders(user_id);		
+	}
 	
+	public boolean changeUserData(String email, String password, String name, String address){
+		User user = userRepository.findByEmail(email);
+		user.setAddress(address);
+		user.setEmail(email);
+		user.setName(name);
+		user.setPassword(password);
+		userRepository.update(user);
+		return true;
+	}
 	
 }
