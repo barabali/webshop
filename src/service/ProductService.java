@@ -63,7 +63,6 @@ public class ProductService {
 	
 	//Jelenleg törli az összes teméket ami benne volt, ez nem volt specifikálva hogy legyen
 	public void deleteCategory(long categoryId){
-		List<Product> products_to_delete=productRepository.findByCategoryId(categoryId);
 		productRepository.deleteByCategoryId(categoryId);
 		categoryRepository.deleteById(categoryId);
 	}

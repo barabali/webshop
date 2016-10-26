@@ -1,8 +1,11 @@
 package service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import model.DailyDiscount;
 import model.order.Order;
+import model.order.OrderStatus;
 import model.user.Role;
 import model.user.User;
 import repository.UserRepository;
@@ -59,5 +62,15 @@ public class UserService {
 		userRepository.update(user);
 		return true;
 	}
+	
+	public boolean admin_setOrderStatus(String email,long order_id,OrderStatus status){
+		User user = userRepository.findByEmail(email);
+		Order order = user.findById(order_id);
+		order.setOrder(status);
+		userRepository.update(user);
+		return true;
+	}
+	
+	
 	
 }

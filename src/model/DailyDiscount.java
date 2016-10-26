@@ -1,16 +1,18 @@
 package model;
 
+import java.math.BigDecimal;
+
 public enum DailyDiscount {
 	
 	Monday,Thuesday,Wednesday,Thursday,Friday,Saturday,Sunday;
 	
-	private int discount;
+	private BigDecimal discount;
 	
-	public void setDiscount(int d){
+	public void setDailyDiscount(BigDecimal d){
 		this.discount=d;
 	}
 
-	public int getDiscount() {
+	public BigDecimal getDailyDiscount() {
 		return discount;
 	}
 
