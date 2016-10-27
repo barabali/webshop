@@ -18,6 +18,7 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 	
+	//TODO: avoid boolean return values
 	public boolean register(String email, String password, String name, String address) {
 		if(userRepository.findByEmail(email) != null) {
 			return false;
@@ -39,6 +40,9 @@ public class UserService {
 		return user;
 	}
 	
+	//TODO: avoid boolean return values
+	//TODO: follow naming convention
+	//TODO: why is changing password different from changing any other user data?
 	public boolean admin_changePassword(String email,String newpassword){
 		User user = userRepository.findByEmail(email);
 		if(user == null) {
@@ -49,10 +53,13 @@ public class UserService {
 		return true;
 	}
 
+	//TODO: unnecessary
 	public List<Order> getPreviousOrders(long user_id){
 		return userRepository.getPreviousOrders(user_id);		
 	}
 	
+	//TODO: avoid boolean return values
+	//TODO: unnecessary
 	public boolean changeUserData(String email, String password, String name, String address){
 		User user = userRepository.findByEmail(email);
 		user.setAddress(address);
@@ -63,6 +70,8 @@ public class UserService {
 		return true;
 	}
 	
+	//TODO: avoid boolean return values
+	//TODO: follow naming convention	
 	public boolean admin_setOrderStatus(String email,long order_id,OrderStatus status){
 		User user = userRepository.findByEmail(email);
 		Order order = user.findById(order_id);
@@ -70,7 +79,5 @@ public class UserService {
 		userRepository.update(user);
 		return true;
 	}
-	
-	
 	
 }

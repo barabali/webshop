@@ -9,8 +9,11 @@ public class Order {
 
 	private Long id;
 	private User user;
+	//TODO: Product versus OrderItem, we will talk about it
 	private Map<Product, Integer> products;
 	private OrderStatus order;
+	
+	//TODO: total price
 
 	public OrderStatus getOrder() {
 		return order;

@@ -5,6 +5,8 @@ public class Category {
 	private Long id;
 	private String name;
 	private Discount discount;
+	
+	//TODO: private Collection<Product> products; could be useful
 
 	public Category(String name) {
 		this.name = name;

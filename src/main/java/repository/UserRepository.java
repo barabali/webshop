@@ -11,6 +11,7 @@ public interface UserRepository extends Repository<User> {
 	
 	public long getSpentMoney(long user_id);
 	
+	//TODO: might be moved to OrderRepository
 	public List<Order> getPreviousOrders(long user_id);
 
 }

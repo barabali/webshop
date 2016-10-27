@@ -20,7 +20,8 @@ public class CartService {
 		this.productRepository = productRepository;
 		this.orderRepository = orderRepository;
 	}
-	
+
+	//TODO: discuss model object versus is arguments
 	public void addToCart(long cartId, long productId, int amount) {
 		Cart cart = cartRepository.findById(cartId);
 		Product product = productRepository.findById(productId);

@@ -19,24 +19,29 @@ public class ProductService {
 		this.categoryRepository = categoryRepository;
 	}
 	
+	//TODO: Methods with trivial single calls to repositories should be removed 
 	public List<Product> listProductsInCategory(long categoryId) {
 		return productRepository.findByCategoryId(categoryId);
 	}
 	
+	//TODO: unnecessary
 	public List<Product> searchProductByName(String expression){
 		return productRepository.searchByName(expression);
 	}
 	
+	//TODO: unnecessary
 	public List<Product> searchProductByMinMax(int min,int max){
 		return productRepository.searchByMinMax(min,max);
 	}
 	
+	//TODO: might be unnecessary
 	public void createCategory(String name,Discount discount){
 		Category new_category=new Category(name);
 		new_category.setDiscount(discount);
 		categoryRepository.create(new_category);
 	}
 	
+	//TODO: might be unnecessary
 	public void createProduct(String name,Category category,BigDecimal basePrice){
 		Product new_product=new Product();
 		new_product.setBasePrice(basePrice);
@@ -45,6 +50,7 @@ public class ProductService {
 		productRepository.create(new_product);
 	}
 	
+	//TODO: might be unnecessary 
 	public void modifyCategory(long category_id,String new_category_name,Discount discount){
 		Category category=categoryRepository.findById(category_id);
 		category.setName(new_category_name);
@@ -52,6 +58,7 @@ public class ProductService {
 		categoryRepository.update(category);
 	}
 	
+	//TODO: might be unnecessary
 	public void modifyProduct(long product_id,String name,BigDecimal basePrice,List<Discount> discounts,Category category){
 		Product product=productRepository.findById(product_id);
 		product.setBasePrice(basePrice);
@@ -67,6 +74,7 @@ public class ProductService {
 		categoryRepository.deleteById(categoryId);
 	}
 	
+	//TODO: unnecessary
 	public void deleteProduct(long product_id){
 		productRepository.deleteById(product_id);
 	}

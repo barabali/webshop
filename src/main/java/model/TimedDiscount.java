@@ -21,6 +21,7 @@ public class TimedDiscount extends Discount {
 
 	@Override
 	public BigDecimal calculateDiscount(BigDecimal basePrice) {
+		//TODO: time limit should be considered at both sides
 		Date now = new Date();
 		if(now.after(expiresAt)) {
 			return basePrice;
