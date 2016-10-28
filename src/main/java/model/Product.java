@@ -13,7 +13,6 @@ public class Product {
 	}
 
 	public Product(String name, BigDecimal basePrice) {
-		super();
 		this.name = name;
 		this.basePrice = basePrice;
 	}

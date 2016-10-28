@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import model.order.Order;
@@ -11,6 +12,12 @@ public class Cart {
 	private User user;
 	
 	private Map<Product, Integer> products;
+	
+	
+
+	public Cart() {
+		this.products = new HashMap<Product, Integer>();
+	}
 
 	public User getUser() {
 		return user;
