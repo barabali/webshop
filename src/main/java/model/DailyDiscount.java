@@ -2,12 +2,9 @@ package model;
 
 import java.math.BigDecimal;
 
-//TODO: A suggestion to make our life easier with JPA later:
-//An enum Day would be introduced. And DailyDiscount would be a class with two members:
-//a Day day and BigDecimal discount. 
-public enum DailyDiscount {
+public class DailyDiscount {
 	
-	Monday,Thuesday,Wednesday,Thursday,Friday,Saturday,Sunday;
+	private Day day;
 	
 	private BigDecimal discount;
 	
@@ -17,6 +14,14 @@ public enum DailyDiscount {
 
 	public BigDecimal getDailyDiscount() {
 		return discount;
+	}
+
+	public Day getDay() {
+		return day;
+	}
+
+	public void setDay(Day day) {
+		this.day = day;
 	}
 
 }

@@ -5,28 +5,37 @@ import java.util.Date;
 
 public class TimedDiscount extends Discount {
 
-	public TimedDiscount(String value) {
+	public TimedDiscount(String value, Date startsAt, Date expiresAt) {
 		super(value);
-	}
-
-	private Date expiresAt;
-
-	public Date getExpiresAt() {
-		return expiresAt;
-	}
-
-	public void setExpiresAt(Date expiresAt) {
+		this.startsAt = startsAt;
 		this.expiresAt = expiresAt;
 	}
 
+	private Date startsAt;
+	private Date expiresAt;
+
 	@Override
 	public BigDecimal calculateDiscount(BigDecimal basePrice) {
-		//TODO: time limit should be considered at both sides
 		Date now = new Date();
-		if(now.after(expiresAt)) {
+		if(now.after(expiresAt) || now.before(startsAt)) {
 			return basePrice;
 		}
 		return super.calculateDiscount(basePrice);
 	}
 
+	public Date getStartsAt() {
+		return startsAt;
+	}
+
+	public void setStartsAt(Date startsAt) {
+		this.startsAt = startsAt;
+	}
+
+	public Date getExpiresAt() {
+		return expiresAt;
+	}
+	
+	public void setExpiresAt(Date expiresAt) {
+		this.expiresAt = expiresAt;
+	}
 }
