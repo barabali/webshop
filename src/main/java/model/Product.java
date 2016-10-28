@@ -8,6 +8,15 @@ public class Product {
 	private Long id;
 	private String name;
 	private BigDecimal basePrice;
+	
+	public Product() {
+	}
+
+	public Product(String name, BigDecimal basePrice) {
+		super();
+		this.name = name;
+		this.basePrice = basePrice;
+	}
 
 	private List<Discount> discounts;
 	private Category category;
