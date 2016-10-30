@@ -1,7 +1,5 @@
 package service;
 
-import java.util.List;
-
 import model.order.Order;
 import model.order.OrderStatus;
 import model.user.Role;
@@ -45,24 +43,6 @@ public class UserService {
 		userRepository.update(user);
 	}
 
-	//TODO: unnecessary
-	public List<Order> getPreviousOrders(long userId){
-		return userRepository.getPreviousOrders(userId);		
-	}
-	
-	//TODO: unnecessary
-	public void changeUserData(String email, String password, String name, String address){
-		User user = userRepository.findByEmail(email);
-		if(user == null) {
-			return;
-		}
-		user.setAddress(address);
-		user.setEmail(email);
-		user.setName(name);
-		user.setPassword(password);
-		userRepository.update(user);
-	}
-	
 	public void setOrderStatus(String email, long orderId,OrderStatus status){
 		User user = userRepository.findByEmail(email);
 		Order order = user.findById(orderId);

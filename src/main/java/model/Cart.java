@@ -1,5 +1,6 @@
 package model;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,6 @@ public class Cart {
 	private User user;
 	
 	private Map<Product, Integer> products;
-	
-	
 
 	public Cart() {
 		this.products = new HashMap<Product, Integer>();
@@ -40,7 +39,12 @@ public class Cart {
 	}
 	
 	public Order toOrder() {
-		return new Order(user, products);
+		Map<OrderItem,Integer> orders=new HashMap<OrderItem,Integer>();
+		for (Product product : products.keySet()) {
+			OrderItem order=new OrderItem(product.getName(),product.getBasePrice(),product.getCategory());
+			orders.put(order,products.get(product));
+		}
+		return new Order(user, orders);
 	}
 	
 	public void setProductAmount(Product product, int amount) {

@@ -24,15 +24,7 @@ public class ProductService {
 		return productRepository.findByCategoryId(categoryId);
 	}
 	
-	//TODO: unnecessary
-	public List<Product> searchProductByName(String expression){
-		return productRepository.searchByName(expression);
-	}
 	
-	//TODO: unnecessary
-	public List<Product> searchProductByMinMax(int min,int max){
-		return productRepository.searchByMinMax(min,max);
-	}
 	
 	//TODO: might be unnecessary
 	public void createCategory(String name,Discount discount){
@@ -73,11 +65,7 @@ public class ProductService {
 		productRepository.deleteByCategoryId(categoryId);
 		categoryRepository.deleteById(categoryId);
 	}
-	
-	//TODO: unnecessary
-	public void deleteProduct(long product_id){
-		productRepository.deleteById(product_id);
-	}
+
 
 	
 }

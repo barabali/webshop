@@ -8,6 +8,8 @@ public class Product {
 	private Long id;
 	private String name;
 	private BigDecimal basePrice;
+	private List<Discount> discounts;
+	private Category category;
 	
 	public Product() {
 	}
@@ -17,8 +19,6 @@ public class Product {
 		this.basePrice = basePrice;
 	}
 
-	private List<Discount> discounts;
-	private Category category;
 
 	public String getName() {
 		return name;
