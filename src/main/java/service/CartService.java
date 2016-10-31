@@ -21,17 +21,12 @@ public class CartService {
 		this.orderRepository = orderRepository;
 	}
 
-	//TODO: discuss model object versus individual arguments
-	public void addToCart(long cartId, long productId, int amount) {
-		Cart cart = cartRepository.findById(cartId);
-		Product product = productRepository.findById(productId);
+	public void addToCart(Cart cart,Product product,int amount) {
 		cart.putToCart(product, amount);
 		cartRepository.update(cart);
 	}
 	
-	public void removeFromCart(long cartId, long productId) {
-		Cart cart = cartRepository.findById(cartId);
-		Product product = productRepository.findById(productId);
+	public void removeFromCart(Cart cart,Product product) {
 		cart.setProductAmount(product, 0);
 		cartRepository.update(cart);
 	}

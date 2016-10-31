@@ -13,6 +13,10 @@ public class Order {
 	private OrderStatus order;
 	private BigDecimal totaPrice;
 	
+	public Order(User user, Map<OrderItem, Integer> orderItems) {
+		this.user = user;
+		this.orderItems = orderItems;
+	}
 	
 	public BigDecimal getTotaPrice() {
 		return totaPrice;
@@ -30,10 +34,6 @@ public class Order {
 		this.order = order;
 	}
 
-	public Order(User user, Map<OrderItem, Integer> orderItems) {
-		this.user = user;
-		this.orderItems = orderItems;
-	}
 
 	public User getUser() {
 		return user;
