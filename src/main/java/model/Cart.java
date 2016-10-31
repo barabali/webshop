@@ -14,7 +14,8 @@ public class Cart {
 	
 	private Map<Product, Integer> products;
 
-	public Cart() {
+	public Cart(User user){
+		this.user=user;
 		this.products = new HashMap<Product, Integer>();
 	}
 
