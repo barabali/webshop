@@ -63,8 +63,8 @@ public class CartTest {
 	@Test
 	public void testCartTwoDifferentProductToOrder(){
 		Cart cart = new Cart(testuser);
-		Product p= new Product("abc", BigDecimal.valueOf(20.0));
-		Product p1=new Product("fa",BigDecimal.valueOf(15.0));
+		Product p= new Product("abc", BigDecimal.valueOf(20.0),new Category("testCat"));
+		Product p1=new Product("fa",BigDecimal.valueOf(15.0),new Category("testCat"));
 		cart.putToCart(p, 2);
 		cart.putToCart(p1, 3);
 		Order order=cart.toOrder();
