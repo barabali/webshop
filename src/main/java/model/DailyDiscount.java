@@ -1,19 +1,23 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-public class DailyDiscount {
-	
+public class DailyDiscount extends Discount{
 	private Day day;
 	
-	private BigDecimal discount;
-	
-	public void setDailyDiscount(BigDecimal d){
-		this.discount=d;
+	public DailyDiscount(String value,Day day) {
+		super(value);
+		this.day=day;
 	}
-
-	public BigDecimal getDailyDiscount() {
-		return discount;
+	
+	@Override
+	public BigDecimal calculateDiscount(BigDecimal basePrice) {
+		Date now = new Date();
+		if(day.getValue()==now.getDay()) {
+			return super.calculateDiscount(basePrice);
+		}
+		return basePrice;
 	}
 
 	public Day getDay() {

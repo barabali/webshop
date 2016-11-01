@@ -14,9 +14,10 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String name, BigDecimal basePrice) {
+	public Product(String name, BigDecimal basePrice,Category cat) {
 		this.name = name;
 		this.basePrice = basePrice;
+		category=cat;
 	}
 
 
@@ -42,6 +43,20 @@ public class Product {
 
 	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
+	}
+	
+	public BigDecimal getFinalPrice(){
+		BigDecimal finalPrice=basePrice;
+		List<Discount> categoryDiscounts=category.getDiscounts();
+		
+		for (Discount discount : categoryDiscounts) {
+			finalPrice=discount.calculateDiscount(finalPrice);
+		}
+		
+		for (Discount discount : discounts) {
+			finalPrice=discount.calculateDiscount(finalPrice);
+		}
+		return finalPrice.setScale(0, 0);
 	}
 
 	public Category getCategory() {

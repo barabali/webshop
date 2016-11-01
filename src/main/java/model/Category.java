@@ -7,7 +7,7 @@ public class Category {
 
 	private Long id;
 	private String name;
-	private Discount discount;
+	private List<Discount> discounts;
 	private List<Product> products;
 
 	public List<Product> getProducts() {
@@ -20,16 +20,16 @@ public class Category {
 
 	public Category(String name) {
 		this.name = name;
-		discount=new Discount("0.0");
+		discounts=new ArrayList<>();
 		products=new ArrayList<Product>();
 	}
 
-	public Discount getDiscount() {
-		return discount;
+	public List<Discount> getDiscounts() {
+		return discounts;
 	}
 
-	public void setDiscount(Discount discount) {
-		this.discount = discount;
+	public void setDiscounts(List<Discount> discounts) {
+		this.discounts = discounts;
 	}
 
 	public String getName() {
