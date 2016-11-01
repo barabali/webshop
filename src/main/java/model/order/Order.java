@@ -11,19 +11,23 @@ public class Order {
 	private User user;
 	private Map<OrderItem, Integer> orderItems;
 	private OrderStatus order;
-	private BigDecimal totaPrice;
+	private BigDecimal totalPrice;
 	
 	public Order(User user, Map<OrderItem, Integer> orderItems) {
 		this.user = user;
 		this.orderItems = orderItems;
+		this.totalPrice=BigDecimal.valueOf(0.0);
+		for (OrderItem orderItem : orderItems.keySet()) {
+			totalPrice=totalPrice.add(orderItem.getBasePrice().multiply(BigDecimal.valueOf(orderItems.get(orderItem).doubleValue())));
+		}
 	}
 	
-	public BigDecimal getTotaPrice() {
-		return totaPrice;
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setTotaPrice(BigDecimal totaPrice) {
-		this.totaPrice = totaPrice;
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public OrderStatus getOrder() {
