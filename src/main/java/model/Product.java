@@ -71,4 +71,8 @@ public class Product {
 		return id;
 	}
 
+	public void setId(Long databaseGeneratedId) {
+		id=databaseGeneratedId;
+	}
+
 }
