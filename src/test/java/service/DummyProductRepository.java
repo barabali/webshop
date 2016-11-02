@@ -48,7 +48,7 @@ public class DummyProductRepository implements ProductRepository{
 	@Override
 	public List<Product> findAll() {
 		List<Product> result=new ArrayList<>();
-		Iterator i=products.values().iterator();
+		Iterator<Product> i=products.values().iterator();
 		while(i.hasNext()){
 			Product tmp=(Product)i.next();
 				result.add(tmp);
@@ -59,7 +59,7 @@ public class DummyProductRepository implements ProductRepository{
 	@Override
 	public List<Product> findByCategoryId(long categoryId) {
 		List<Product> result=new ArrayList<>();
-		Iterator i=products.values().iterator();
+		Iterator<Product> i=products.values().iterator();
 		while(i.hasNext()){
 			Product tmp=(Product)i.next();
 			if(tmp.getCategory().getId()==categoryId)
