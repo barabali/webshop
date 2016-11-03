@@ -6,7 +6,6 @@ import exception.CartNotFoundException;
 import model.Cart;
 import model.Product;
 import model.order.Order;
-import model.order.OrderStatus;
 import repository.CartRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
