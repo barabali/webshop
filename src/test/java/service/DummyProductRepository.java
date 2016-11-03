@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import exception.ProductNotFoundException;
 import model.Category;
 import model.Product;
 import repository.ProductRepository;
@@ -42,6 +43,8 @@ public class DummyProductRepository implements ProductRepository{
 
 	@Override
 	public Product findById(long id) {
+		if(products.containsValue(id)==false)
+			throw new ProductNotFoundException();
 		return products.get(id);
 	}
 

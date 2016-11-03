@@ -2,6 +2,7 @@ package service;
 
 import java.util.Map;
 
+import exception.CartNotFoundException;
 import model.Cart;
 import model.Product;
 import model.order.Order;
@@ -31,7 +32,7 @@ public class CartService {
 		cartRepository.update(cart);
 	}
 	
-	public void finalizeOrder(long cartId) {
+	public void finalizeOrder(long cartId){
 		Cart cart = cartRepository.findById(cartId);
 		Order order = cart.toOrder();
 		orderRepository.create(order);
@@ -40,6 +41,8 @@ public class CartService {
 	
 	public Map<Product, Integer> showCart(long cartId){
 		Cart cart = cartRepository.findById(cartId);
+		if(cart==null)
+			throw new CartNotFoundException();
 		return cart.getProducts();
 	}
 	
@@ -55,6 +58,5 @@ public class CartService {
 		cart.clear();
 		cartRepository.update(cart);
 	}
-
 	
 }
