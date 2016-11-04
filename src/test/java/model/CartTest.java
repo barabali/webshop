@@ -25,6 +25,7 @@ public class CartTest {
 		Cart cart = new Cart(testuser);
 		Product p = testProduct;
 		cart.putToCart(p, 1);
+		//TODO: it should be possible to get the value not only with the same object, but with new Product("abc", BigDecimal.valueOf(20.0),new Category("testCategory"))
 		Assert.assertEquals(1, cart.getProducts().get(p).intValue());
 	}
 	

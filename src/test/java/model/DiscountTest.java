@@ -30,6 +30,8 @@ public class DiscountTest {
 	
 	@Test
 	public void testDailyDiscountOneDay(){
+		
+		//TODO: unused
 		Discount timed=createAvailableTimedDiscount();
 		Discount day=new DailyDiscount("0.3",Day.MONDAY);
 		
@@ -54,7 +56,7 @@ public class DiscountTest {
 		product.setDiscounts(discounts);
 		Assert.assertEquals(new BigDecimal("1400"),product.getFinalPrice());
 	}
-
+	
 	private Discount createAvailableTimedDiscount() {
 		Date now=new Date();
 		
