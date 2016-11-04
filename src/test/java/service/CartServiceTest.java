@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
 
 import exception.CartNotFoundException;
 import exception.ProductNotFoundException;
-
-import org.junit.Assert;
-import org.junit.BeforeClass;
-
+import model.Cart;
 import model.Product;
 import model.user.User;
 import repository.CartRepository;
@@ -42,13 +42,21 @@ public class CartServiceTest {
 
 	@Test
 	public void testShowCartExists() throws CartNotFoundException {
-		Map<Product, Integer> resultValue = cartService.showCart(0);
+		cartService.cartRepository = mock(CartRepository.class);
+		
+		when(cartService.cartRepository.findById(1L)).thenReturn(new Cart());
+		
+		Map<Product, Integer> resultValue = cartService.showCart(1L);
 		Assert.assertNotNull(resultValue);
 	}
 
 	@Test(expected = CartNotFoundException.class)
 	public void testShowNotCartNotExists() throws CartNotFoundException {
-		cartService.showCart(1);
+		cartService.cartRepository = mock(CartRepository.class);
+		
+		when(cartService.cartRepository.findById(1L)).thenReturn(null);
+		
+		Map<Product, Integer> resultValue = cartService.showCart(1L);
 	}
 
 	@Test(expected = ProductNotFoundException.class)

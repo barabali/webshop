@@ -12,7 +12,7 @@ import repository.ProductRepository;
 
 public class CartService {
 
-	private CartRepository cartRepository;
+	CartRepository cartRepository;
 	private ProductRepository productRepository;
 	private OrderRepository orderRepository;
 
