@@ -3,6 +3,7 @@ package service;
 import java.util.Map;
 
 import exception.CartNotFoundException;
+import exception.ProductNotFoundException;
 import model.Cart;
 import model.Product;
 import model.order.Order;
@@ -13,8 +14,8 @@ import repository.ProductRepository;
 public class CartService {
 
 	CartRepository cartRepository;
-	private ProductRepository productRepository;
-	private OrderRepository orderRepository;
+	ProductRepository productRepository;
+	OrderRepository orderRepository;
 
 	public CartService(CartRepository cartRepository, ProductRepository productRepository, OrderRepository orderRepository) {
 		this.cartRepository = cartRepository;
@@ -48,7 +49,11 @@ public class CartService {
 	
 	public void changeNumberInCart(long cartId,long productId,int amount){
 		Cart cart = cartRepository.findById(cartId);
+		if(cart==null)
+			throw new CartNotFoundException();
 		Product product = productRepository.findById(productId);
+		if(product==null)
+			throw new ProductNotFoundException();
 		cart.setProductAmount(product, amount);
 		cartRepository.update(cart);
 	}
