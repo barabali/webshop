@@ -21,5 +21,6 @@ public class Discount {
 	public BigDecimal calculateDiscount(BigDecimal basePrice) {
 		return basePrice.multiply(BigDecimal.ONE.subtract(value));
 	}
+	
 
 }

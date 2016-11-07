@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -10,16 +11,16 @@ public class Product {
 	private BigDecimal basePrice;
 	private List<Discount> discounts;
 	private Category category;
-	
+
 	public Product() {
 	}
 
-	public Product(String name, BigDecimal basePrice,Category cat) {
+	public Product(String name, BigDecimal basePrice, Category cat) {
 		this.name = name;
 		this.basePrice = basePrice;
-		category=cat;
+		category = cat;
+		discounts = new ArrayList<>();
 	}
-
 
 	public String getName() {
 		return name;
@@ -44,19 +45,33 @@ public class Product {
 	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
 	}
-	
-	public BigDecimal getFinalPrice(){
-		BigDecimal finalPrice=basePrice;
-		List<Discount> categoryDiscounts=category.getDiscounts();
-		
-		for (Discount discount : categoryDiscounts) {
-			finalPrice=discount.calculateDiscount(finalPrice);
+
+	public BigDecimal getFinalPrice() {
+		BigDecimal finalPrice = basePrice;
+		BigDecimal summa = new BigDecimal("0.0");
+		summa=summa.add(summaCategoryDiscounts());
+		summa=summa.add(summaProductDiscounts());
+		return finalPrice.multiply(BigDecimal.valueOf(1.0).add(summa.negate())).setScale(0, 0);
+	}
+
+	private BigDecimal summaProductDiscounts() {
+		BigDecimal summa = new BigDecimal("0.0");
+		if (!discounts.isEmpty())
+			for (Discount discount : discounts) {
+				summa = summa.add(discount.getValue());
+			}
+		return summa;
+	}
+
+	private BigDecimal summaCategoryDiscounts() {
+		BigDecimal summa = new BigDecimal("0.0");
+		if (!category.getDiscounts().isEmpty()){
+			List<Discount> categoryDiscounts = category.getDiscounts();
+			for (Discount discount : categoryDiscounts) {
+				summa = summa.add(discount.getValue());
+			}
 		}
-		
-		for (Discount discount : discounts) {
-			finalPrice=discount.calculateDiscount(finalPrice);
-		}
-		return finalPrice.setScale(0, 0);
+		return summa;
 	}
 
 	public Category getCategory() {
@@ -72,7 +87,7 @@ public class Product {
 	}
 
 	public void setId(Long databaseGeneratedId) {
-		id=databaseGeneratedId;
+		id = databaseGeneratedId;
 	}
 
 	@Override
@@ -117,7 +132,5 @@ public class Product {
 			return false;
 		return true;
 	}
-
-	
 
 }
