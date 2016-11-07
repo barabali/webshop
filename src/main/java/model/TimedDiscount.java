@@ -23,6 +23,14 @@ public class TimedDiscount extends Discount {
 		return super.calculateDiscount(basePrice);
 	}
 
+	@Override
+	public BigDecimal isAvalibe(){
+		Date now = new Date();
+		if(now.after(expiresAt) || now.before(startsAt)) {
+			return BigDecimal.valueOf(0.0);
+		}
+		return super.isAvalibe();
+	}
 	public Date getStartsAt() {
 		return startsAt;
 	}

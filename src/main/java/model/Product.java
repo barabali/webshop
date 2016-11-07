@@ -58,7 +58,7 @@ public class Product {
 		BigDecimal summa = new BigDecimal("0.0");
 		if (!discounts.isEmpty())
 			for (Discount discount : discounts) {
-				summa = summa.add(discount.getValue());
+				summa = summa.add(discount.isAvalibe());
 			}
 		return summa;
 	}
@@ -68,7 +68,7 @@ public class Product {
 		if (!category.getDiscounts().isEmpty()){
 			List<Discount> categoryDiscounts = category.getDiscounts();
 			for (Discount discount : categoryDiscounts) {
-				summa = summa.add(discount.getValue());
+				summa = summa.add(discount.isAvalibe());
 			}
 		}
 		return summa;

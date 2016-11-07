@@ -3,6 +3,8 @@ package model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.jws.soap.SOAPBinding;
+
 public class DailyDiscount extends Discount{
 	private Day day;
 	
@@ -18,6 +20,15 @@ public class DailyDiscount extends Discount{
 			return super.calculateDiscount(basePrice);
 		}
 		return basePrice;
+	}
+	
+	@Override
+	public BigDecimal isAvalibe(){
+		Date now = new Date();
+		if(day.getValue()==now.getDay()) {
+			return super.isAvalibe();
+		}
+		return BigDecimal.valueOf(0.0);
 	}
 
 	public Day getDay() {
