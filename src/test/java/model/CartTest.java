@@ -153,6 +153,39 @@ public class CartTest {
 		Assert.assertEquals(3,cart.getProducts().get(testProduct).intValue() );
 	}
 	
+	@Test
+	public void testTwoProductsFixedPriceTogether(){
+		CombinedProduct combinedProduct=createCombinedProduct();
+		cart.putToCart(combinedProduct,1);
+		Assert.assertEquals(new BigDecimal("3800.0"),cart.getTotalPrice());
+	}
+	
+	@Test
+	public void testCombinedProductsDelete(){
+		CombinedProduct combinedProduct=createCombinedProduct();
+		cart.putToCart(combinedProduct,1);
+		cart.setProductCombinedAmount(combinedProduct, 0);
+		Assert.assertEquals(new BigDecimal("0.0"),cart.getTotalPrice());
+	}
+	
+	 @Test 
+	public void testCombinedProductsToOrder(){
+		CombinedProduct combinedProduct=createCombinedProduct();
+		cart.putToCart(combinedProduct,1);
+		System.out.println("now");
+		Order order=cart.toOrder();
+		Assert.assertEquals(1, order.getProducts().size());
+		Assert.assertEquals(BigDecimal.valueOf(3800.0), order.getTotalPrice());
+		Assert.assertEquals(BigDecimal.valueOf(3800.0), cart.getTotalPrice());
+	 }
+	
+
+	private CombinedProduct createCombinedProduct() {
+		Product a=new Product("product a",new BigDecimal("2000"),new Category("testCat A"));
+		Product b=new Product("product b",new BigDecimal("2000"),new Category("testCat B"));
+			
+		return new CombinedProduct(a,b,new BigDecimal("3800"));
+	}
 
 	@After
 	public void clearCart() {

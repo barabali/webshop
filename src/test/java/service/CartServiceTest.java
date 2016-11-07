@@ -16,6 +16,7 @@ import exception.CartNotFoundException;
 import exception.ProductNotFoundException;
 import model.Cart;
 import model.Category;
+import model.CombinedProduct;
 import model.Product;
 import model.order.Order;
 import model.user.User;
@@ -81,7 +82,7 @@ public class CartServiceTest {
 		Order order = cart.toOrder();
 		orders.add(order);
 	}
-	
+		
 	@After
 	public void clearOrders(){
 		orders.clear();
