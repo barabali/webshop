@@ -137,6 +137,22 @@ public class CartTest {
 	}
 
 	
+	@Test
+	public void testCartTotalPriceWithTwoProduct() {
+		discounts.add(ten);
+		testProduct.setDiscounts(new ArrayList<>(discounts));
+		Category car= new Category("Car");
+		car.setDiscounts(new ArrayList<>(discounts));
+		Product suzuki=new Product("Suzuki",BigDecimal.valueOf(1000),car);
+		discounts.add(fourty);
+		suzuki.setDiscounts(new ArrayList<>(discounts));
+		cart.putToCart(testProduct, 3);
+		cart.putToCart(suzuki, 5);
+		Assert.assertEquals(BigDecimal.valueOf(2054.0), cart.getTotalPrice());
+		Assert.assertEquals(5 ,cart.getProducts().get(suzuki).intValue());
+		Assert.assertEquals(3,cart.getProducts().get(testProduct).intValue() );
+	}
+	
 
 	@After
 	public void clearCart() {
