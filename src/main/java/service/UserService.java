@@ -9,7 +9,7 @@ import repository.UserRepository;
 
 public class UserService {
 
-	private UserRepository userRepository;
+	UserRepository userRepository;
 
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
