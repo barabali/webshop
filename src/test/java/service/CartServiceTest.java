@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class CartServiceTest {
 	static CartService cartService;
 	static ProductRepository productRepository;
 	static OrderRepository orderRepository;
+	static Cart cart;
+	static Order order;
+	static List<Order> orders = new ArrayList<Order>();
 
 	@BeforeClass
 	public static void setUp() {
@@ -59,11 +63,7 @@ public class CartServiceTest {
 
 	@Test
 	public void finilizeOrder() {
-		Cart cart = new Cart(new User("test", "test@test", "testAddress", "testPass"));
-		cart.putToCart(new Product("testProduct", new BigDecimal("2000"), new Category("testCat")), 1);
-		Order order = cart.toOrder();
-		List<Order> orders = new ArrayList<Order>();
-		orders.add(order);
+		initCartAndOrders();
 		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
 		when(cartService.orderRepository.findAll()).thenReturn(orders);
 		cartService.finalizeOrder(0L);
@@ -73,6 +73,18 @@ public class CartServiceTest {
 				actualUser.getPassword() };
 		Assert.assertArrayEquals(expected, actual);
 		Assert.assertEquals(BigDecimal.valueOf(2000.0), cartService.orderRepository.findAll().get(0).getTotalPrice());
+	}
+
+	private void initCartAndOrders() {
+		cart = new Cart(new User("test", "test@test", "testAddress", "testPass"));
+		cart.putToCart(new Product("testProduct", new BigDecimal("2000"), new Category("testCat")), 1);
+		Order order = cart.toOrder();
+		orders.add(order);
+	}
+	
+	@After
+	public void clearOrders(){
+		orders.clear();
 	}
 
 }
