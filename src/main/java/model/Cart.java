@@ -53,7 +53,8 @@ public class Cart {
 	}
 	
 	public Order toOrder() {
-		return new Order(user, productsToOrder(),combinedProductsToOrder());
+		Order o=new Order(user, productsToOrder(),combinedProductsToOrder());
+		return o;
 	}
 	
 	private Map<OrderItem,Integer> productsToOrder(){
@@ -67,9 +68,12 @@ public class Cart {
 	
 	private Map<CombinedOrderItem,Integer> combinedProductsToOrder(){
 		Map<CombinedOrderItem,Integer> orders=new HashMap<CombinedOrderItem,Integer>();
-		for (CombinedProduct combinedProduct : productsCombined.keySet()) {			
+		
+		for (CombinedProduct combinedProduct : productsCombined.keySet()) {		
 			List<Product> productsfromcombined=combinedProduct.getProducts();
-			List<OrderItem> items=extractOrderItems(productsfromcombined);			
+			
+			List<OrderItem> items=extractOrderItems(productsfromcombined);
+			
 			CombinedOrderItem order=new CombinedOrderItem(items,combinedProduct.getPrice());			
 			orders.put(order,productsCombined.get(combinedProduct));			
 		}
@@ -108,7 +112,7 @@ public class Cart {
 	public void putToCart(CombinedProduct product, int amount) {
 		int newAmount;
 		if(productsCombined.containsKey(product)) {
-			newAmount = amount + products.get(product);
+			newAmount = amount + productsCombined.get(product);
 		} else {
 			newAmount = amount;
 		}
@@ -134,10 +138,7 @@ public class Cart {
 	}
 	
 	private void reCalculateTotalPrice(){
-		BigDecimal sum= new BigDecimal("0.0");
-		sum=sum.add(sumProducts());
-		sum=sum.add(sumCombinedProducts());
-		totalPrice=sum;
+		totalPrice=sumProducts().add(sumCombinedProducts());
 	}
 	
 	private BigDecimal sumProducts() {

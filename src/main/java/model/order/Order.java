@@ -24,8 +24,8 @@ public class Order {
 		for (OrderItem orderItem : orderItems.keySet()) {
 			totalPrice=totalPrice.add(orderItem.getBasePrice().multiply(BigDecimal.valueOf(orderItems.get(orderItem).doubleValue())));
 		}
-		for (CombinedOrderItem orderItem : combinedOrderItems.keySet()) {
-			totalPrice=totalPrice.add(orderItem.getBasePrice().multiply(BigDecimal.valueOf(orderItems.get(orderItem).doubleValue())));
+		for (CombinedOrderItem orderItem : combineditems.keySet()) {
+			totalPrice=totalPrice.add(orderItem.getBasePrice().multiply(BigDecimal.valueOf(combineditems.get(orderItem).doubleValue())));
 		}
 	}
 	
@@ -56,6 +56,10 @@ public class Order {
 
 	public Map<OrderItem, Integer> getProducts() {
 		return orderItems;
+	}
+	
+	public Map<CombinedOrderItem,Integer> getCombinedProducts(){
+		return combinedOrderItems;
 	}
 
 	public void setProducts(Map<OrderItem, Integer> orderItems) {

@@ -155,14 +155,14 @@ public class CartTest {
 	
 	@Test
 	public void testTwoProductsFixedPriceTogether(){
-		CombinedProduct combinedProduct=createCombinedProduct();
+		CombinedProduct combinedProduct=createCombinedProduct("3800");
 		cart.putToCart(combinedProduct,1);
 		Assert.assertEquals(new BigDecimal("3800.0"),cart.getTotalPrice());
 	}
 	
 	@Test
 	public void testCombinedProductsDelete(){
-		CombinedProduct combinedProduct=createCombinedProduct();
+		CombinedProduct combinedProduct=createCombinedProduct("3800");
 		cart.putToCart(combinedProduct,1);
 		cart.setProductCombinedAmount(combinedProduct, 0);
 		Assert.assertEquals(new BigDecimal("0.0"),cart.getTotalPrice());
@@ -170,21 +170,30 @@ public class CartTest {
 	
 	 @Test 
 	public void testCombinedProductsToOrder(){
-		CombinedProduct combinedProduct=createCombinedProduct();
+		CombinedProduct combinedProduct=createCombinedProduct("3800");
 		cart.putToCart(combinedProduct,1);
-		System.out.println("now");
 		Order order=cart.toOrder();
-		Assert.assertEquals(1, order.getProducts().size());
+		Assert.assertEquals(1, order.getCombinedProducts().size());
 		Assert.assertEquals(BigDecimal.valueOf(3800.0), order.getTotalPrice());
 		Assert.assertEquals(BigDecimal.valueOf(3800.0), cart.getTotalPrice());
 	 }
+	 
+	 @Test
+	 public void testCombinedAndSimpleProductsTogether(){
+		 CombinedProduct combinedProduct=createCombinedProduct("3800");
+		 Product testproduct=new Product("product a",new BigDecimal("2000"),new Category("testCat A"));
+		 cart.putToCart(combinedProduct, 2);
+		 cart.putToCart(testproduct, 2);
+		 //Price should be 3*3800+2*2000=11600
+		 Assert.assertEquals(BigDecimal.valueOf(11600.0), cart.getTotalPrice());
+	 }
 	
 
-	private CombinedProduct createCombinedProduct() {
+	private CombinedProduct createCombinedProduct(String value) {
 		Product a=new Product("product a",new BigDecimal("2000"),new Category("testCat A"));
 		Product b=new Product("product b",new BigDecimal("2000"),new Category("testCat B"));
 			
-		return new CombinedProduct(a,b,new BigDecimal("3800"));
+		return new CombinedProduct(a,b,new BigDecimal(value));
 	}
 
 	@After
