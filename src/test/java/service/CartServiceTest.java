@@ -1,5 +1,8 @@
 package service;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,39 +10,44 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
-
-import static org.mockito.Mockito.*;
 
 import exception.CartNotFoundException;
 import exception.ProductNotFoundException;
 import model.Cart;
 import model.Category;
-import model.CombinedProduct;
 import model.Product;
+import model.UserDiscount;
 import model.order.Order;
 import model.user.User;
 import repository.CartRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
+import repository.UserDiscountRepository;
+import repository.UserRepository;
 
 public class CartServiceTest {
 
-	static CartRepository cartRepository;
-	static CartService cartService;
-	static ProductRepository productRepository;
-	static OrderRepository orderRepository;
-	static Cart cart;
-	static Order order;
-	static List<Order> orders = new ArrayList<Order>();
+	CartRepository cartRepository;
+	CartService cartService;
+	ProductRepository productRepository;
+	OrderRepository orderRepository;
+	UserDiscountRepository userDiscountRepository;
+	UserRepository userRepository;
+	Cart cart;
+	Order order;
+	List<Order> orders = new ArrayList<Order>();
 
-	@BeforeClass
-	public static void setUp() {
+	@Before
+	public void setUp() {
 		cartRepository = mock(CartRepository.class);
 		productRepository = mock(ProductRepository.class);
 		orderRepository = mock(OrderRepository.class);
-		cartService = new CartService(cartRepository, productRepository, orderRepository);
+		userDiscountRepository = mock(UserDiscountRepository.class);
+		userRepository = mock(UserRepository.class);
+		cartService = new CartService(cartRepository, orderRepository, userRepository, userDiscountRepository,
+				productRepository);
 	}
 
 	@Test
@@ -63,6 +71,36 @@ public class CartServiceTest {
 	}
 
 	@Test
+	public void testCalculateFinalPriceWithNoUserDiscount() {
+		initCartAndOrders();
+		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
+		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
+		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
+	}
+
+	@Test
+	public void testCalculateFinalPriceWithUserDiscount() {
+		initCartAndOrders();
+		UserDiscount discount = new UserDiscount("500", "0.5");
+		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
+		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(discount);
+		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
+		Assert.assertEquals(1000, finalPrice.doubleValue(), 0.01);
+	}
+
+	@Test
+	public void testCalculateFinalPriceWithUserDiscountOutOfLimits() {
+		initCartAndOrders();
+		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
+		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(null);
+		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
+		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
+	}
+
+	@Test
 	public void finilizeOrder() {
 		initCartAndOrders();
 		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
@@ -82,9 +120,9 @@ public class CartServiceTest {
 		Order order = cart.toOrder();
 		orders.add(order);
 	}
-		
+
 	@After
-	public void clearOrders(){
+	public void clearOrders() {
 		orders.clear();
 	}
 
