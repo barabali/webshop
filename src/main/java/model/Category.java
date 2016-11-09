@@ -68,6 +68,10 @@ public class Category {
 	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
 	}
+	
+	public void addDiscount(Discount discount) {
+		discounts.add(discount);
+	}
 
 	public String getName() {
 		return name;

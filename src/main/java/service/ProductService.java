@@ -1,5 +1,8 @@
 package service;
 
+import model.Category;
+import model.Discount;
+import model.Product;
 import repository.CategoryRepository;
 import repository.ProductRepository;
 
@@ -18,6 +21,14 @@ public class ProductService {
 		categoryRepository.deleteById(categoryId);
 	}
 
-
+	public void addDiscount(Product product, Discount discount) {
+		product.addDiscount(discount);
+		productRepository.update(product);
+	}
+	
+	public void addCategoryDiscount(Category category, Discount discount) {
+		category.addDiscount(discount);
+		categoryRepository.update(category);
+	}
 	
 }

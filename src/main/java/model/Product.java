@@ -45,6 +45,10 @@ public class Product {
 	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
 	}
+	
+	public void addDiscount(Discount discount) {
+		discounts.add(discount);
+	}
 
 	public BigDecimal getFinalPrice() {
 		BigDecimal finalPrice = basePrice;
