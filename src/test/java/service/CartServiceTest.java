@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -109,7 +110,9 @@ public class CartServiceTest {
 	@Test
 	public void testDailyDiscountMatchingDay() {
 		initCartAndOrders();
-		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2;
+		Calendar cal = Calendar.getInstance();
+		cal.roll(Calendar.DAY_OF_WEEK, -2);
+		int day = cal.get(Calendar.DAY_OF_WEEK);
 		DailyDiscount discount = new DailyDiscount("0.5", Day.values()[day]);
 		List<DailyDiscount> discounts = new ArrayList<>();
 		discounts.add(discount);
@@ -122,7 +125,9 @@ public class CartServiceTest {
 	@Test
 	public void testDailyDiscountNotMatchingDay() {
 		initCartAndOrders();
-		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		Calendar cal = Calendar.getInstance();
+		cal.roll(Calendar.DAY_OF_WEEK, -1);
+		int day = cal.get(Calendar.DAY_OF_WEEK);
 		DailyDiscount discount = new DailyDiscount("0.5", Day.values()[day]);
 		List<DailyDiscount> discounts = new ArrayList<>();
 		discounts.add(discount);
