@@ -17,11 +17,14 @@ import exception.CartNotFoundException;
 import exception.ProductNotFoundException;
 import model.Cart;
 import model.Category;
+import model.DailyDiscount;
+import model.Day;
 import model.Product;
 import model.UserDiscount;
 import model.order.Order;
 import model.user.User;
 import repository.CartRepository;
+import repository.DailyDiscountRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
 import repository.UserDiscountRepository;
@@ -35,6 +38,7 @@ public class CartServiceTest {
 	OrderRepository orderRepository;
 	UserDiscountRepository userDiscountRepository;
 	UserRepository userRepository;
+	DailyDiscountRepository dailyDiscountRepository;
 	Cart cart;
 	Order order;
 	List<Order> orders = new ArrayList<Order>();
@@ -46,8 +50,9 @@ public class CartServiceTest {
 		orderRepository = mock(OrderRepository.class);
 		userDiscountRepository = mock(UserDiscountRepository.class);
 		userRepository = mock(UserRepository.class);
+		dailyDiscountRepository = mock(DailyDiscountRepository.class);
 		cartService = new CartService(cartRepository, orderRepository, userRepository, userDiscountRepository,
-				productRepository);
+				productRepository, dailyDiscountRepository);
 	}
 
 	@Test
@@ -96,6 +101,30 @@ public class CartServiceTest {
 		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
 		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
 		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(null);
+		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
+		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
+	}
+	
+	@Test
+	public void testDailyDiscountMatchingDay() {
+		initCartAndOrders();
+		DailyDiscount discount = new DailyDiscount("0.5", Day.THURSDAY);
+		List<DailyDiscount> discounts = new ArrayList<>();
+		discounts.add(discount);
+		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.dailyDiscountRepository.findAll()).thenReturn(discounts);
+		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
+		Assert.assertEquals(1000, finalPrice.doubleValue(), 0.01);
+	}
+	
+	@Test
+	public void testDailyDiscountNotMatchingDay() {
+		initCartAndOrders();
+		DailyDiscount discount = new DailyDiscount("0.5", Day.TUESDAY);
+		List<DailyDiscount> discounts = new ArrayList<>();
+		discounts.add(discount);
+		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.dailyDiscountRepository.findAll()).thenReturn(discounts);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
 	}

@@ -1,15 +1,18 @@
 package service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import exception.CartNotFoundException;
 import exception.ProductNotFoundException;
 import model.Cart;
+import model.DailyDiscount;
 import model.Discount;
 import model.Product;
 import model.order.Order;
 import repository.CartRepository;
+import repository.DailyDiscountRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
 import repository.UserDiscountRepository;
@@ -22,14 +25,16 @@ public class CartService {
 	UserRepository userRepository;
 	UserDiscountRepository userDiscountRepository;
 	ProductRepository productRepository;
+	DailyDiscountRepository dailyDiscountRepository;
 
 	public CartService(CartRepository cartRepository, OrderRepository orderRepository, UserRepository userRepository,
-			UserDiscountRepository userDiscountRepository, ProductRepository productRepository) {
+			UserDiscountRepository userDiscountRepository, ProductRepository productRepository, DailyDiscountRepository dailyDiscountRepository) {
 		this.cartRepository = cartRepository;
 		this.orderRepository = orderRepository;
 		this.userRepository = userRepository;
 		this.userDiscountRepository = userDiscountRepository;
 		this.productRepository = productRepository;
+		this.dailyDiscountRepository = dailyDiscountRepository;
 	}
 
 	public void addToCart(Cart cart,Product product,int amount) {
@@ -51,7 +56,11 @@ public class CartService {
 		BigDecimal totalSpent = userRepository.getSpentMoney(userId);
 		Discount userDiscount = userDiscountRepository.findByLimit(totalSpent);
 		if(userDiscount != null)
-			return userDiscount.calculateDiscount(price);	
+			price = userDiscount.calculateDiscount(price);
+		List<DailyDiscount> dailyDiscounts = dailyDiscountRepository.findAll();
+		for(DailyDiscount discount : dailyDiscounts) {
+			price = discount.calculateDiscount(price);
+		}
 		return price;
 	}
 	
