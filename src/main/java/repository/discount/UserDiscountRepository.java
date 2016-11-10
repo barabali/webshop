@@ -1,8 +1,9 @@
-package repository;
+package repository.discount;
 
 import java.math.BigDecimal;
 
-import model.UserDiscount;
+import model.discount.UserDiscount;
+import repository.Repository;
 
 public interface UserDiscountRepository extends Repository<UserDiscount> {
 	

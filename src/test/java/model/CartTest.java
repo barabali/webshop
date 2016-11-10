@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import model.discount.Discount;
 import model.order.Order;
 import model.user.User;
 

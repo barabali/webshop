@@ -8,6 +8,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import model.discount.DailyDiscount;
+import model.discount.Discount;
+import model.discount.TimedDiscount;
+
 public class DiscountTest {
 
 	@Test

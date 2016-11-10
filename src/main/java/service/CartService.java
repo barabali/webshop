@@ -7,16 +7,16 @@ import java.util.Map;
 import exception.CartNotFoundException;
 import exception.ProductNotFoundException;
 import model.Cart;
-import model.DailyDiscount;
-import model.Discount;
 import model.Product;
+import model.discount.DailyDiscount;
+import model.discount.Discount;
 import model.order.Order;
 import repository.CartRepository;
-import repository.DailyDiscountRepository;
 import repository.OrderRepository;
 import repository.ProductRepository;
-import repository.UserDiscountRepository;
 import repository.UserRepository;
+import repository.discount.DailyDiscountRepository;
+import repository.discount.UserDiscountRepository;
 
 public class CartService {
 

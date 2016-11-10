@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.discount.Discount;
+
 public class Product {
 
 	private Long id;

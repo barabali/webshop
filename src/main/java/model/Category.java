@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.discount.Discount;
+
 public class Category {
 
 	private Long id;
