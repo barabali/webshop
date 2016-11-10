@@ -1,9 +1,6 @@
 package service;
 
-import java.math.BigDecimal;
-
 import model.Category;
-import model.CombinedProduct;
 import model.Product;
 import model.discount.Discount;
 import repository.CategoryRepository;

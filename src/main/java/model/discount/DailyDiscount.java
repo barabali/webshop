@@ -2,9 +2,6 @@ package model.discount;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.jws.soap.SOAPBinding;
-
 import model.Day;
 
 public class DailyDiscount extends Discount{
