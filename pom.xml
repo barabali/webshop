@@ -29,6 +29,6 @@
 			<version>2.2.9</version>
 			<scope>test</scope>
 		</dependency>
-
+<!-- TODO: spring-boot-starter-data-jpa dependency -->
 	</dependencies>
 </project>
