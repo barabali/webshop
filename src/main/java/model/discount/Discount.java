@@ -22,7 +22,7 @@ public class Discount {
 		return basePrice.multiply(BigDecimal.ONE.subtract(value));
 	}
 	
-	public BigDecimal isAvalibe(){
+	public BigDecimal getCurrentValue(){
 		return this.value;
 	}
 	

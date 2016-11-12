@@ -24,12 +24,12 @@ public class TimedDiscount extends Discount {
 	}
 
 	@Override
-	public BigDecimal isAvalibe(){
+	public BigDecimal getCurrentValue(){
 		Date now = new Date();
 		if(now.after(expiresAt) || now.before(startsAt)) {
 			return BigDecimal.valueOf(0.0);
 		}
-		return super.isAvalibe();
+		return super.getCurrentValue();
 	}
 	public Date getStartsAt() {
 		return startsAt;

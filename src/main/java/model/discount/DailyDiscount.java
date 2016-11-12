@@ -22,10 +22,10 @@ public class DailyDiscount extends Discount{
 	}
 	
 	@Override
-	public BigDecimal isAvalibe(){
+	public BigDecimal getCurrentValue(){
 		Date now = new Date();
 		if(day.getValue()==now.getDay()) {
-			return super.isAvalibe();
+			return super.getCurrentValue();
 		}
 		return BigDecimal.valueOf(0.0);
 	}
