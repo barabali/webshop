@@ -5,14 +5,17 @@ import model.order.Order;
 import model.order.OrderStatus;
 import model.user.Role;
 import model.user.User;
+import repository.OrderRepository;
 import repository.UserRepository;
 
 public class UserService {
 
 	UserRepository userRepository;
+	OrderRepository orderRepository;
 
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, OrderRepository orderRepository) {
 		this.userRepository = userRepository;
+		this.orderRepository = orderRepository;
 	}
 
 	public void register(String email, String password, String name, String address)
@@ -46,11 +49,10 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public void setOrderStatus(String email, long orderId, OrderStatus status) {
-		User user = userRepository.findByEmail(email);
-		Order order = user.findById(orderId);
+	public void setOrderStatus(long orderId, OrderStatus status) {
+		Order order = orderRepository.findOne(orderId);
 		order.setOrder(status);
-		userRepository.save(user);
+		orderRepository.save(order);
 	}
 
 }

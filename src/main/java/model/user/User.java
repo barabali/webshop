@@ -1,7 +1,9 @@
 package model.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public class User {
 	private String password;
 
 	private Set<Role> roles = new HashSet<>();
-	private Map<Long,Order> orders = new HashMap<Long,Order>();
+	private List<Order> orders = new ArrayList<>();
 
 	public User(String name, String email, String address, String password) {
 		this.name = name;
@@ -73,20 +75,16 @@ public class User {
 		roles.add(role);
 	}
 
-	public Map<Long,Order> getOrders() {
+	public List<Order> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(Map<Long,Order> orders) {
+	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
 
 	public Long getId() {
 		return id;
-	}
-	
-	public Order findById(long order_id){
-		return orders.get(order_id);
 	}
 
 }

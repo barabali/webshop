@@ -8,18 +8,21 @@ import static org.mockito.Mockito.*;
 
 import exception.RegistrationFailedException;
 import model.user.User;
+import repository.OrderRepository;
 import repository.UserRepository;
 
 public class UserServiceTest {
 	
 	static UserRepository userRepository;
+	static OrderRepository orderRepository;
 	static UserService userService;
 	static User user;
 	
 	@BeforeClass
     public static void setUp() {
 		userRepository = mock(UserRepository.class);
-		userService = new UserService(userRepository);
+		orderRepository = mock(OrderRepository.class);
+		userService = new UserService(userRepository, orderRepository);
 		user=new User("Test Name","abcdef@test.com","1111 Test, Address 1.","password");
     }
 	
