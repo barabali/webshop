@@ -26,7 +26,7 @@ public class Product {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "base_price")
+	@Column(name = "base_price", precision = 7, scale = 2)
 	private BigDecimal basePrice;
 
 	@ManyToMany

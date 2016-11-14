@@ -17,7 +17,7 @@ public class Discount {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "value")
+	@Column(name = "value", precision = 7, scale = 2)
 	private BigDecimal value;
 
 	public Discount(String value) {

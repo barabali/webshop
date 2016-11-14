@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "user_discount")
 public class UserDiscount extends Discount {
 
-	@Column(name = "lower_limit")
+	@Column(name = "lower_limit", precision = 7, scale = 2)
 	private BigDecimal limit;
 
 	public UserDiscount(String limit, String discountValue) {
