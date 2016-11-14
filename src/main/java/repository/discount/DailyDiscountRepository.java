@@ -1,8 +1,9 @@
 package repository.discount;
 
-import model.discount.DailyDiscount;
-import repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DailyDiscountRepository extends Repository<DailyDiscount> {
+import model.discount.DailyDiscount;
+
+public interface DailyDiscountRepository extends JpaRepository<DailyDiscount, Long> {
 
 }

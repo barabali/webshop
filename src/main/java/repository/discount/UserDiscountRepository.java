@@ -2,10 +2,11 @@ package repository.discount;
 
 import java.math.BigDecimal;
 
-import model.discount.UserDiscount;
-import repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDiscountRepository extends Repository<UserDiscount> {
+import model.discount.UserDiscount;
+
+public interface UserDiscountRepository extends JpaRepository<UserDiscount, Long> {
 	
 	public UserDiscount findByLimit(BigDecimal limit);
 
