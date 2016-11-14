@@ -106,14 +106,13 @@ public class CartServiceTest {
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
 	}
-	
+
 	@Test
 	public void testDailyDiscountMatchingDay() {
 		initCartAndOrders();
 		Calendar cal = Calendar.getInstance();
-		cal.roll(Calendar.DAY_OF_WEEK, -2);
-		int day = cal.get(Calendar.DAY_OF_WEEK);
-		DailyDiscount discount = new DailyDiscount("0.5", Day.values()[day]);
+		Day day = Day.fromCalendar(cal.get(Calendar.DAY_OF_WEEK));
+		DailyDiscount discount = new DailyDiscount("0.5", day);
 		List<DailyDiscount> discounts = new ArrayList<>();
 		discounts.add(discount);
 		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
@@ -121,14 +120,14 @@ public class CartServiceTest {
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(1000, finalPrice.doubleValue(), 0.01);
 	}
-	
+
 	@Test
 	public void testDailyDiscountNotMatchingDay() {
 		initCartAndOrders();
 		Calendar cal = Calendar.getInstance();
 		cal.roll(Calendar.DAY_OF_WEEK, -1);
-		int day = cal.get(Calendar.DAY_OF_WEEK);
-		DailyDiscount discount = new DailyDiscount("0.5", Day.values()[day]);
+		Day day = Day.fromCalendar(cal.get(Calendar.DAY_OF_WEEK));
+		DailyDiscount discount = new DailyDiscount("0.5", day);
 		List<DailyDiscount> discounts = new ArrayList<>();
 		discounts.add(discount);
 		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
