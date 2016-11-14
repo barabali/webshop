@@ -18,6 +18,12 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>1.4.2.RELEASE</version>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
@@ -29,6 +35,5 @@
 			<version>2.2.9</version>
 			<scope>test</scope>
 		</dependency>
-<!-- TODO: spring-boot-starter-data-jpa dependency -->
 	</dependencies>
 </project>
