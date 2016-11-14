@@ -18,17 +18,17 @@ public class ProductService {
 	
 	public void deleteCategory(long categoryId){
 		productRepository.deleteByCategoryId(categoryId);
-		categoryRepository.deleteById(categoryId);
+		categoryRepository.delete(categoryId);
 	}
 
 	public void addDiscount(Product product, Discount discount) {
 		product.addDiscount(discount);
-		productRepository.update(product);
+		productRepository.save(product);
 	}
 	
 	public void addCategoryDiscount(Category category, Discount discount) {
 		category.addDiscount(discount);
-		categoryRepository.update(category);
+		categoryRepository.save(category);
 	}
 	
 }

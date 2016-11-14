@@ -4,13 +4,12 @@ import java.util.List;
 
 public interface Repository<T> {
 
-	public void create(T entity);
 	
-	public void deleteById(long id);
+	public void delete(long id); //delete
 	
-	public void update(T entity);
+	public void save(T entity); //save
 	
-	public T findById(long id);
+	public T findOne(long id); //findOne
 	
 	public List<T> findAll();
 	

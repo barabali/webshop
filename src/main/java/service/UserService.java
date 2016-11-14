@@ -23,7 +23,7 @@ public class UserService {
 		}
 		User user = new User(name, email, address, password);
 		user.addRole(Role.REGISTERED);
-		userRepository.create(user);
+		userRepository.save(user);
 	}
 
 	public User login(String email, String password) {
@@ -43,14 +43,14 @@ public class UserService {
 			return;
 		}
 		user.setPassword(newpassword);
-		userRepository.update(user);
+		userRepository.save(user);
 	}
 
 	public void setOrderStatus(String email, long orderId, OrderStatus status) {
 		User user = userRepository.findByEmail(email);
 		Order order = user.findById(orderId);
 		order.setOrder(status);
-		userRepository.update(user);
+		userRepository.save(user);
 	}
 
 }

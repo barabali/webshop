@@ -39,16 +39,16 @@ public class CartService {
 
 	public void addToCart(Cart cart,Product product,int amount) {
 		cart.putToCart(product, amount);
-		cartRepository.update(cart);
+		cartRepository.save(cart);
 	}
 	
 	public void removeFromCart(Cart cart,Product product) {
 		cart.setProductAmount(product, 0);
-		cartRepository.update(cart);
+		cartRepository.save(cart);
 	}
 	
 	public BigDecimal calculateFinalPrice(long cartId, long userId) {
-		Cart cart = cartRepository.findById(cartId);
+		Cart cart = cartRepository.findOne(cartId);
 		if(cart == null)
 			throw new CartNotFoundException();
 		Order order = cart.toOrder();
@@ -65,35 +65,35 @@ public class CartService {
 	}
 	
 	public void finalizeOrder(long cartId){
-		Cart cart = cartRepository.findById(cartId);
+		Cart cart = cartRepository.findOne(cartId);
 		Order order = cart.toOrder();
-		orderRepository.create(order);
+		orderRepository.save(order);
 		cart.clear();
-		cartRepository.update(cart);
+		cartRepository.save(cart);
 	}
 	
 	public Map<Product, Integer> showCart(long cartId){
-		Cart cart = cartRepository.findById(cartId);
+		Cart cart = cartRepository.findOne(cartId);
 		if(cart==null)
 			throw new CartNotFoundException();
 		return cart.getProducts();
 	}
 	
 	public void changeNumberInCart(long cartId, long productId,int amount){
-		Cart cart = cartRepository.findById(cartId);
+		Cart cart = cartRepository.findOne(cartId);
 		if(cart==null)
 			throw new CartNotFoundException();
-		Product product = productRepository.findById(productId);
+		Product product = productRepository.findOne(productId);
 		if(product==null)
 			throw new ProductNotFoundException();
 		cart.setProductAmount(product, amount);
-		cartRepository.update(cart);
+		cartRepository.save(cart);
 	}
 	
 	public void deleteCart(long cartId){
-		Cart cart = cartRepository.findById(cartId);
+		Cart cart = cartRepository.findOne(cartId);
 		cart.clear();
-		cartRepository.update(cart);
+		cartRepository.save(cart);
 	}
 	
 }

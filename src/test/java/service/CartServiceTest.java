@@ -59,28 +59,28 @@ public class CartServiceTest {
 
 	@Test
 	public void testShowCartExists() throws CartNotFoundException {
-		when(cartService.cartRepository.findById(1L)).thenReturn(new Cart());
+		when(cartService.cartRepository.findOne(1L)).thenReturn(new Cart());
 		Map<Product, Integer> resultValue = cartService.showCart(1L);
 		Assert.assertNotNull(resultValue);
 	}
 
 	@Test(expected = CartNotFoundException.class)
 	public void testShowNotCartNotExists() throws CartNotFoundException {
-		when(cartService.cartRepository.findById(1L)).thenReturn(null);
+		when(cartService.cartRepository.findOne(1L)).thenReturn(null);
 		cartService.showCart(1L);
 	}
 
 	@Test(expected = ProductNotFoundException.class)
 	public void changeNumberInCart() throws CartNotFoundException {
-		when(cartService.cartRepository.findById(0)).thenReturn(new Cart());
-		when(cartService.productRepository.findById(1L)).thenReturn(null);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(new Cart());
+		when(cartService.productRepository.findOne(1L)).thenReturn(null);
 		cartService.changeNumberInCart(0, 0, 2);
 	}
 
 	@Test
 	public void testCalculateFinalPriceWithNoUserDiscount() {
 		initCartAndOrders();
-		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
@@ -90,7 +90,7 @@ public class CartServiceTest {
 	public void testCalculateFinalPriceWithUserDiscount() {
 		initCartAndOrders();
 		UserDiscount discount = new UserDiscount("500", "0.5");
-		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
 		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(discount);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
@@ -100,7 +100,7 @@ public class CartServiceTest {
 	@Test
 	public void testCalculateFinalPriceWithUserDiscountOutOfLimits() {
 		initCartAndOrders();
-		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
 		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(null);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
@@ -115,7 +115,7 @@ public class CartServiceTest {
 		DailyDiscount discount = new DailyDiscount("0.5", day);
 		List<DailyDiscount> discounts = new ArrayList<>();
 		discounts.add(discount);
-		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.dailyDiscountRepository.findAll()).thenReturn(discounts);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(1000, finalPrice.doubleValue(), 0.01);
@@ -130,7 +130,7 @@ public class CartServiceTest {
 		DailyDiscount discount = new DailyDiscount("0.5", day);
 		List<DailyDiscount> discounts = new ArrayList<>();
 		discounts.add(discount);
-		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.dailyDiscountRepository.findAll()).thenReturn(discounts);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
@@ -139,7 +139,7 @@ public class CartServiceTest {
 	@Test
 	public void finilizeOrder() {
 		initCartAndOrders();
-		when(cartService.cartRepository.findById(0L)).thenReturn(cart);
+		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.orderRepository.findAll()).thenReturn(orders);
 		cartService.finalizeOrder(0L);
 		String[] expected = { "test", "test@test", "testAddress", "testPass" };
