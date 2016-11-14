@@ -7,16 +7,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import model.order.Order;
 import model.user.User;
 
+@Entity
+@Table(name="cart")
 public class Cart {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Column(name = "name")
 	private User user;
+	
+	@Column(name = "base_price", precision = 7, scale = 2)
 	private BigDecimal totalPrice;
 	
+	@OneToMany
 	private Map<Product, Integer> products;
+	
+	@OneToMany
 	private Map<CombinedProduct,Integer> productsCombined;;
 
 	public Cart() {
