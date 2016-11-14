@@ -3,13 +3,30 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import model.discount.Discount;
 
+@Entity
+@Table(name = "category")
 public class Category {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@Column(name = "name")
 	private String name;
+
+	@OneToMany
 	private List<Discount> discounts;
+	@OneToMany
 	private List<Product> products;
 
 	public List<Product> getProducts() {
@@ -59,8 +76,8 @@ public class Category {
 
 	public Category(String name) {
 		this.name = name;
-		discounts=new ArrayList<>();
-		products=new ArrayList<Product>();
+		discounts = new ArrayList<>();
+		products = new ArrayList<Product>();
 	}
 
 	public List<Discount> getDiscounts() {
@@ -70,7 +87,7 @@ public class Category {
 	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
 	}
-	
+
 	public void addDiscount(Discount discount) {
 		discounts.add(discount);
 	}
@@ -85,10 +102,6 @@ public class Category {
 
 	public Long getId() {
 		return id;
-	}
-	
-	public void setId(Long id){
-		this.id=id;
 	}
 
 }

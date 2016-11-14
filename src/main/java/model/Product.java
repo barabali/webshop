@@ -4,14 +4,35 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import model.discount.Discount;
 
+@Entity
+@Table(name = "product")
 public class Product {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "base_price")
 	private BigDecimal basePrice;
+
+	@ManyToMany
 	private List<Discount> discounts;
+
+	@ManyToOne
 	private Category category;
 
 	public Product() {
@@ -47,7 +68,7 @@ public class Product {
 	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
 	}
-	
+
 	public void addDiscount(Discount discount) {
 		discounts.add(discount);
 	}
@@ -55,8 +76,8 @@ public class Product {
 	public BigDecimal getFinalPrice() {
 		BigDecimal finalPrice = basePrice;
 		BigDecimal summa = new BigDecimal("0.0");
-		summa=summa.add(summaCategoryDiscounts());
-		summa=summa.add(summaProductDiscounts());
+		summa = summa.add(summaCategoryDiscounts());
+		summa = summa.add(summaProductDiscounts());
 		return finalPrice.multiply(BigDecimal.valueOf(1.0).add(summa.negate())).setScale(0, 0);
 	}
 
@@ -71,7 +92,7 @@ public class Product {
 
 	private BigDecimal summaCategoryDiscounts() {
 		BigDecimal summa = new BigDecimal("0.0");
-		if (!category.getDiscounts().isEmpty()){
+		if (!category.getDiscounts().isEmpty()) {
 			List<Discount> categoryDiscounts = category.getDiscounts();
 			for (Discount discount : categoryDiscounts) {
 				summa = summa.add(discount.getCurrentValue());
