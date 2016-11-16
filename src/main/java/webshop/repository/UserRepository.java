@@ -1,16 +1,12 @@
 package webshop.repository;
 
 
-import java.math.BigDecimal;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import webshop.model.user.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 	
 	public User findByEmail(String email);
-	
-	public BigDecimal getSpentMoney(long userId);
-	
+
 }
