@@ -40,6 +40,10 @@ public class CartService {
 	ProductRepository productRepository;
 	@Autowired
 	DailyDiscountRepository dailyDiscountRepository;
+	
+	public CartService(){
+		
+	}
 
 	public CartService(CartRepository cartRepository, OrderRepository orderRepository, UserRepository userRepository,
 			UserDiscountRepository userDiscountRepository, ProductRepository productRepository, DailyDiscountRepository dailyDiscountRepository) {

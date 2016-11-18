@@ -19,6 +19,10 @@ public class UserService {
 	@Autowired
 	OrderRepository orderRepository;
 
+	public UserService(){
+		
+	}
+	
 	public UserService(UserRepository userRepository, OrderRepository orderRepository) {
 		this.userRepository = userRepository;
 		this.orderRepository = orderRepository;

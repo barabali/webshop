@@ -1,8 +1,12 @@
 package webshop.service;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 import webshop.exception.RegistrationFailedException;
@@ -13,16 +17,19 @@ import webshop.service.UserService;
 
 public class UserServiceTest {
 	
-	static UserRepository userRepository;
-	static OrderRepository orderRepository;
-	static UserService userService;
-	static User user;
+	@InjectMocks
+	 UserService userService;
 	
-	@BeforeClass
-    public static void setUp() {
-		userRepository = mock(UserRepository.class);
-		orderRepository = mock(OrderRepository.class);
-		userService = new UserService(userRepository, orderRepository);
+	@Mock
+	 UserRepository userRepository;
+	@Mock
+	 OrderRepository orderRepository;
+	 User user;
+	
+	@Before
+    public  void setUp() {
+		MockitoAnnotations.initMocks(this);
+
 		user=new User("Test Name","abcdef@test.com","1111 Test, Address 1.","password");
     }
 	
