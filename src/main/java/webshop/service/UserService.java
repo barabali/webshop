@@ -1,5 +1,8 @@
 package webshop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import webshop.exception.RegistrationFailedException;
 import webshop.model.order.Order;
 import webshop.model.order.OrderStatus;
@@ -8,9 +11,12 @@ import webshop.model.user.User;
 import webshop.repository.OrderRepository;
 import webshop.repository.UserRepository;
 
+@Service
 public class UserService {
 
+	@Autowired
 	UserRepository userRepository;
+	@Autowired
 	OrderRepository orderRepository;
 
 	public UserService(UserRepository userRepository, OrderRepository orderRepository) {

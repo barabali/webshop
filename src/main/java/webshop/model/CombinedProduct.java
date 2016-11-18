@@ -24,6 +24,11 @@ public class CombinedProduct{
 	
 	@Column(name = "base_price", precision = 7, scale = 2)
 	private BigDecimal fixedPrice;
+	
+	public CombinedProduct(){
+		products=new ArrayList<>();
+		fixedPrice=new BigDecimal(0);
+	}
 
 	public CombinedProduct(Product a, Product b, BigDecimal bigDecimal) {
 		products=new ArrayList<>();

@@ -1,14 +1,20 @@
 package webshop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import webshop.model.Category;
 import webshop.model.Product;
 import webshop.model.discount.Discount;
 import webshop.repository.CategoryRepository;
 import webshop.repository.ProductRepository;
 
+@Service
 public class ProductService {
 
+	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
 	private CategoryRepository categoryRepository;
 
 	public ProductService(ProductRepository productRepository,CategoryRepository categoryRepository) {

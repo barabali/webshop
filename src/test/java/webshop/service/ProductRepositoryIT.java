@@ -16,9 +16,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import webshop.model.Category;
+import webshop.model.Day;
 import webshop.model.Product;
+import webshop.model.discount.DailyDiscount;
 import webshop.repository.CategoryRepository;
 import webshop.repository.ProductRepository;
+import webshop.repository.discount.DailyDiscountRepository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -29,6 +32,9 @@ public class ProductRepositoryIT {
 	
 	@Autowired
 	CategoryRepository categoryRepository;
+	
+	@Autowired
+	DailyDiscountRepository dailyDiscountRepository;
 	
 	Category cat;
 	
@@ -63,6 +69,14 @@ public class ProductRepositoryIT {
 		productRepository.deleteByCategoryId(cat.getId());
 		List<Product> products=productRepository.findAll();
 		Assert.assertEquals(0,products.size());
+	}
+	
+	@Test
+	public void testDailyDiscountRepo(){
+		DailyDiscount disc=new DailyDiscount("10",Day.MONDAY);
+		dailyDiscountRepository.save(disc);
+		List<DailyDiscount> dailyDiscounts = dailyDiscountRepository.findAll();
+		Assert.assertEquals(1,dailyDiscounts.size());
 	}
 	
 	

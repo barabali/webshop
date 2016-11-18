@@ -30,11 +30,15 @@ public class CartService {
 	CartRepository cartRepository;
 	
 	//TODO: autowire all repositories, in all service classes
-	
+	@Autowired
 	OrderRepository orderRepository;
+	@Autowired
 	UserRepository userRepository;
+	@Autowired
 	UserDiscountRepository userDiscountRepository;
+	@Autowired
 	ProductRepository productRepository;
+	@Autowired
 	DailyDiscountRepository dailyDiscountRepository;
 
 	public CartService(CartRepository cartRepository, OrderRepository orderRepository, UserRepository userRepository,
