@@ -23,6 +23,10 @@ public class OrderItem {
 	private BigDecimal basePrice;
 	@ManyToOne
 	private Category category;
+	
+	public OrderItem(){
+		
+	}
 
 	public Category getCategory() {
 		return category;

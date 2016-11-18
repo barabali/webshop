@@ -25,9 +25,14 @@ public class CombinedOrderItem{
 	@Column(name = "base_price", precision = 7, scale = 2)
 	private BigDecimal basePrice;
 
+	public CombinedOrderItem(){
+		orderItems=new ArrayList<>();
+		basePrice=new BigDecimal(0);
+		
+	}
 	
 	public CombinedOrderItem(List<OrderItem> items, BigDecimal price) {
-		orderItems=new ArrayList<>();
+		orderItems=items;
 		this.basePrice = price;
 	}
 

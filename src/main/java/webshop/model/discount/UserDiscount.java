@@ -12,6 +12,11 @@ public class UserDiscount extends Discount {
 
 	@Column(name = "lower_limit", precision = 7, scale = 2)
 	private BigDecimal limit;
+	
+	public UserDiscount(){
+		super("0");
+		limit=new BigDecimal(0);
+	}
 
 	public UserDiscount(String limit, String discountValue) {
 		super(discountValue);

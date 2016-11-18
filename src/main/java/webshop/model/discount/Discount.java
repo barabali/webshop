@@ -19,6 +19,10 @@ public class Discount {
 
 	@Column(name = "value", precision = 7, scale = 2)
 	private BigDecimal value;
+	
+	public Discount(){
+		value=new BigDecimal(0);
+	}
 
 	public Discount(String value) {
 		this.value = new BigDecimal(value);

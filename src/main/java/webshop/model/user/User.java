@@ -35,6 +35,9 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 	@OneToMany
 	private List<Order> orders = new ArrayList<>();
+	
+	public User(){
+	}
 
 	public User(String name, String email, String address, String password) {
 		this.name = name;

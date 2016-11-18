@@ -40,6 +40,10 @@ public class Order {
 	@Column(name = "total_price", precision = 7, scale = 2)
 	private BigDecimal totalPrice;
 	
+	public Order(){
+		
+	}
+	
 	public Order(User user, Map<OrderItem, Integer> orderItems, Map<CombinedOrderItem, Integer> combineditems) {
 		this.user = user;
 		this.orderItems = orderItems;

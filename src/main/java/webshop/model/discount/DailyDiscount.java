@@ -16,6 +16,10 @@ public class DailyDiscount extends Discount {
 
 	@Enumerated(EnumType.STRING)
 	private Day day;
+	
+	public DailyDiscount(){
+		super("0");
+	}
 
 	public DailyDiscount(String value, Day day) {
 		super(value);

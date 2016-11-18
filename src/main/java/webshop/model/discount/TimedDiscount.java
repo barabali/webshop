@@ -20,6 +20,10 @@ public class TimedDiscount extends Discount {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "expires_at")
 	private Date expiresAt;
+	
+	public TimedDiscount(){
+		super("0");
+	}
 
 	public TimedDiscount(String value, Date startsAt, Date expiresAt) {
 		super(value);
