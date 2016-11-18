@@ -1,4 +1,4 @@
-package webshop.service;
+package webshop.repository;
 
 import static org.junit.Assert.*;
 
