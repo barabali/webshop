@@ -74,6 +74,8 @@ public class Category {
 		this.products = products;
 	}
 
+	//TODO: default constructor, everywhere
+	
 	public Category(String name) {
 		this.name = name;
 		discounts = new ArrayList<>();

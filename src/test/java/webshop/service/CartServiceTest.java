@@ -14,6 +14,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import webshop.exception.CartNotFoundException;
 import webshop.exception.ProductNotFoundException;
@@ -35,27 +38,31 @@ import webshop.service.CartService;
 
 public class CartServiceTest {
 
-	CartRepository cartRepository;
+	//TODO: create mocks this way
+	
+	@InjectMocks
 	CartService cartService;
+	
+	@Mock
+	CartRepository cartRepository;
+	@Mock
 	ProductRepository productRepository;
+	@Mock
 	OrderRepository orderRepository;
+	@Mock
 	UserDiscountRepository userDiscountRepository;
+	@Mock
 	UserRepository userRepository;
+	@Mock
 	DailyDiscountRepository dailyDiscountRepository;
-	Cart cart;
+	
+	Cart cart;	
 	Order order;
 	List<Order> orders = new ArrayList<Order>();
 
 	@Before
 	public void setUp() {
-		cartRepository = mock(CartRepository.class);
-		productRepository = mock(ProductRepository.class);
-		orderRepository = mock(OrderRepository.class);
-		userDiscountRepository = mock(UserDiscountRepository.class);
-		userRepository = mock(UserRepository.class);
-		dailyDiscountRepository = mock(DailyDiscountRepository.class);
-		cartService = new CartService(cartRepository, orderRepository, userRepository, userDiscountRepository,
-				productRepository, dailyDiscountRepository);
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test

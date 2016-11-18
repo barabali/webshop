@@ -19,6 +19,9 @@ import javax.persistence.Table;
 import webshop.model.order.Order;
 import webshop.model.user.User;
 
+
+//TODO: install mysql, create a database, configure src/main/resources/application.yml to use that database
+// run with maven goal spring-boot:run
 @Entity
 @Table(name="cart")
 public class Cart {

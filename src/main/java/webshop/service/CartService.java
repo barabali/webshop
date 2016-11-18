@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import webshop.exception.CartNotFoundException;
 import webshop.exception.ProductNotFoundException;
 import webshop.model.Cart;
@@ -18,9 +22,15 @@ import webshop.repository.UserRepository;
 import webshop.repository.discount.DailyDiscountRepository;
 import webshop.repository.discount.UserDiscountRepository;
 
+//TODO: @Service for all service class
+@Service
 public class CartService {
 
+	@Autowired
 	CartRepository cartRepository;
+	
+	//TODO: autowire all repositories, in all service classes
+	
 	OrderRepository orderRepository;
 	UserRepository userRepository;
 	UserDiscountRepository userDiscountRepository;
@@ -64,6 +74,7 @@ public class CartService {
 		return price;
 	}
 	
+	@Transactional
 	public void finalizeOrder(long cartId){
 		Cart cart = cartRepository.findOne(cartId);
 		Order order = cart.toOrder();
