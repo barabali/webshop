@@ -1,4 +1,11 @@
 spring:
   jpa:
+    database: MYSQL
     hibernate:
       ddl-auto: update
+      
+  datasource:
+    url: jdbc:mysql://localhost:3306/webshop
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
