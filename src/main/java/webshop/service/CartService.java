@@ -22,14 +22,12 @@ import webshop.repository.UserRepository;
 import webshop.repository.discount.DailyDiscountRepository;
 import webshop.repository.discount.UserDiscountRepository;
 
-//TODO: @Service for all service class
 @Service
 public class CartService {
 
 	@Autowired
 	CartRepository cartRepository;
 	
-	//TODO: autowire all repositories, in all service classes
 	@Autowired
 	OrderRepository orderRepository;
 	@Autowired
@@ -72,7 +70,7 @@ public class CartService {
 		Order order = cart.toOrder();
 		BigDecimal price = order.getTotalPrice();
 		BigDecimal totalSpent = userRepository.getSpentMoney(userId);
-		Discount userDiscount = userDiscountRepository.findByLimit(totalSpent);
+		Discount userDiscount = userDiscountRepository.findFirstByLimitGreaterThanOrderByLimit(totalSpent);
 		if(userDiscount != null)
 			price = userDiscount.calculateDiscount(price);
 		List<DailyDiscount> dailyDiscounts = dailyDiscountRepository.findAll();

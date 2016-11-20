@@ -36,11 +36,9 @@ import webshop.service.CartService;
 
 public class CartServiceTest {
 
-	//TODO: create mocks this way
-	
 	@InjectMocks
 	CartService cartService;
-	
+
 	@Mock
 	CartRepository cartRepository;
 	@Mock
@@ -53,8 +51,8 @@ public class CartServiceTest {
 	UserRepository userRepository;
 	@Mock
 	DailyDiscountRepository dailyDiscountRepository;
-	
-	Cart cart;	
+
+	Cart cart;
 	Order order;
 	List<Order> orders = new ArrayList<Order>();
 
@@ -98,7 +96,8 @@ public class CartServiceTest {
 		UserDiscount discount = new UserDiscount("500", "0.5");
 		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
-		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(discount);
+		when(cartService.userDiscountRepository.findFirstByLimitGreaterThanOrderByLimit(new BigDecimal(1000)))
+				.thenReturn(discount);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(1000, finalPrice.doubleValue(), 0.01);
 	}
@@ -108,7 +107,8 @@ public class CartServiceTest {
 		initCartAndOrders();
 		when(cartService.cartRepository.findOne(0L)).thenReturn(cart);
 		when(cartService.userRepository.getSpentMoney(1L)).thenReturn(new BigDecimal(1000));
-		when(cartService.userDiscountRepository.findByLimit(new BigDecimal(1000))).thenReturn(null);
+		when(cartService.userDiscountRepository.findFirstByLimitGreaterThanOrderByLimit(new BigDecimal(1000)))
+				.thenReturn(null);
 		BigDecimal finalPrice = cartService.calculateFinalPrice(0L, 1L);
 		Assert.assertEquals(2000, finalPrice.doubleValue(), 0.01);
 	}

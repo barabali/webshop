@@ -9,11 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 import webshop.model.user.User;
 
-public interface UserRepository extends JpaRepository<User, Long>/*, UserRepositoryCustom*/ {
+public interface UserRepository extends JpaRepository<User, Long> {
 	
 	public User findByEmail(String email);
 
-	//TODO: define query here
-	@Query("SELECT u FROM User u WHERE u.id=:userId")
+	@Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.user.id=:userId")
 	public BigDecimal getSpentMoney(@Param("userId") long userId);
 }
