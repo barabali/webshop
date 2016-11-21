@@ -2,6 +2,7 @@ package webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import webshop.model.Category;
 import webshop.model.Product;
@@ -22,6 +23,7 @@ public class ProductService {
 		this.categoryRepository = categoryRepository;
 	}
 	
+	@Transactional
 	public void deleteCategory(long categoryId){
 		productRepository.deleteByCategoryId(categoryId);
 		categoryRepository.delete(categoryId);
