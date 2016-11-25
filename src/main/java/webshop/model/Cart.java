@@ -37,7 +37,7 @@ public class Cart {
 	private Map<Product, Integer> products;
 
 	@ElementCollection
-	private Map<CombinedProduct, Integer> productsCombined;;
+	private Map<CombinedProduct, Integer> productsCombined;
 
 	public Cart() {
 		this.products = new HashMap<Product, Integer>();
@@ -50,6 +50,10 @@ public class Cart {
 		this.products = new HashMap<Product, Integer>();
 		this.productsCombined = new HashMap<CombinedProduct, Integer>();
 		this.totalPrice = new BigDecimal("0.0");
+	}
+	
+	public Map<CombinedProduct, Integer> getProductsCombined() {
+		return productsCombined;
 	}
 
 	public User getUser() {
@@ -101,7 +105,7 @@ public class Cart {
 		return orders;
 	}
 
-	private List<OrderItem> extractOrderItems(List<Product> productsfromcombined) {
+	public List<OrderItem> extractOrderItems(List<Product> productsfromcombined) {
 		List<OrderItem> list = new ArrayList<>();
 		for (Product product : productsfromcombined) {
 			OrderItem order = new OrderItem(product.getName(), product.getFinalPrice(), product.getCategory());

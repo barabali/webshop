@@ -18,8 +18,10 @@ import webshop.model.discount.Discount;
 import webshop.model.user.User;
 import webshop.repository.CartRepository;
 import webshop.repository.CategoryRepository;
+import webshop.repository.OrderRepository;
 import webshop.repository.ProductRepository;
 import webshop.repository.UserRepository;
+import webshop.service.CartService;
 
 @Component
 public class WebshopRunner implements CommandLineRunner {
@@ -32,6 +34,10 @@ public class WebshopRunner implements CommandLineRunner {
 	UserRepository userRepository;
 	@Autowired
 	CartRepository cartRepository;
+	@Autowired
+	OrderRepository orderRepository;
+	@Autowired
+	CartService cartService;
 
 	static final int CATEGORYSIZE = 10;
 	static final int PRODUCTSIZE = 100;
@@ -44,6 +50,8 @@ public class WebshopRunner implements CommandLineRunner {
 			createUser();
 		if(cartRepository.count() == 0)
 			createCartWithProducts();
+		if(orderRepository.count() == 0)
+			finalizeOrders();
 
 		// TODO: insert and query data
 		// 1. Create 10 categories, with 100 products in each category
@@ -110,6 +118,11 @@ public class WebshopRunner implements CommandLineRunner {
 		cart.putToCart(p5, 1);
 	
 		cartRepository.save(cart);
+	}
+	
+	//5
+	private void finalizeOrders() {
+		cartService.finalizeOrder(3L);
 	}
 
 }

@@ -27,6 +27,8 @@ import webshop.model.discount.UserDiscount;
 import webshop.model.order.Order;
 import webshop.model.user.User;
 import webshop.repository.CartRepository;
+import webshop.repository.CombinedOrderItemRepository;
+import webshop.repository.OrderItemRepository;
 import webshop.repository.OrderRepository;
 import webshop.repository.ProductRepository;
 import webshop.repository.UserRepository;
@@ -51,6 +53,10 @@ public class CartServiceTest {
 	UserRepository userRepository;
 	@Mock
 	DailyDiscountRepository dailyDiscountRepository;
+	@Mock
+	OrderItemRepository orderItemRepository;
+	@Mock
+	CombinedOrderItemRepository combinedOrderItemRepository;
 
 	Cart cart;
 	Order order;

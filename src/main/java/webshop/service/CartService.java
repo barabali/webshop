@@ -11,11 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import webshop.exception.CartNotFoundException;
 import webshop.exception.ProductNotFoundException;
 import webshop.model.Cart;
+import webshop.model.CombinedOrderItem;
+import webshop.model.OrderItem;
 import webshop.model.Product;
 import webshop.model.discount.DailyDiscount;
 import webshop.model.discount.Discount;
 import webshop.model.order.Order;
 import webshop.repository.CartRepository;
+import webshop.repository.CombinedOrderItemRepository;
+import webshop.repository.OrderItemRepository;
 import webshop.repository.OrderRepository;
 import webshop.repository.ProductRepository;
 import webshop.repository.UserRepository;
@@ -38,19 +42,13 @@ public class CartService {
 	ProductRepository productRepository;
 	@Autowired
 	DailyDiscountRepository dailyDiscountRepository;
-	
+	@Autowired
+	OrderItemRepository orderItemRepository;
+	@Autowired
+	CombinedOrderItemRepository combinedOrderItemRepository;
+
 	public CartService(){
 		
-	}
-
-	public CartService(CartRepository cartRepository, OrderRepository orderRepository, UserRepository userRepository,
-			UserDiscountRepository userDiscountRepository, ProductRepository productRepository, DailyDiscountRepository dailyDiscountRepository) {
-		this.cartRepository = cartRepository;
-		this.orderRepository = orderRepository;
-		this.userRepository = userRepository;
-		this.userDiscountRepository = userDiscountRepository;
-		this.productRepository = productRepository;
-		this.dailyDiscountRepository = dailyDiscountRepository;
 	}
 
 	public void addToCart(Cart cart,Product product,int amount) {
@@ -83,7 +81,20 @@ public class CartService {
 	@Transactional
 	public void finalizeOrder(long cartId){
 		Cart cart = cartRepository.findOne(cartId);
+					
 		Order order = cart.toOrder();
+		
+		Map<OrderItem, Integer> orderItems = order.getProducts();
+		Map<CombinedOrderItem, Integer> combinedOrderItems = order.getCombinedProducts();
+		
+		for(OrderItem oi : orderItems.keySet()) {
+			orderItemRepository.save(oi);
+		}
+		
+		for(CombinedOrderItem coi : combinedOrderItems.keySet()) {
+			combinedOrderItemRepository.save(coi);
+		}
+				
 		orderRepository.save(order);
 		cart.clear();
 		cartRepository.save(cart);
