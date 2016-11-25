@@ -15,6 +15,7 @@ import webshop.model.Day;
 import webshop.model.Product;
 import webshop.model.discount.DailyDiscount;
 import webshop.model.discount.Discount;
+import webshop.model.order.Order;
 import webshop.model.user.User;
 import webshop.repository.CartRepository;
 import webshop.repository.CategoryRepository;
@@ -48,10 +49,12 @@ public class WebshopRunner implements CommandLineRunner {
 			createCategoriesWithProducts();
 		if (userRepository.count() == 0)
 			createUser();
-		if(cartRepository.count() == 0)
+		if (cartRepository.count() == 0)
 			createCartWithProducts();
-		if(orderRepository.count() == 0)
+		if (orderRepository.count() == 0)
 			finalizeOrders();
+
+		listOrders();
 
 		// TODO: insert and query data
 		// 1. Create 10 categories, with 100 products in each category
@@ -67,14 +70,7 @@ public class WebshopRunner implements CommandLineRunner {
 		// If it is possible, try to optimize those methods.
 	}
 
-	
-	//2
-	private void createUser() {
-		User test = new User("Name", "mail@test.com", "addres", "password");
-		userRepository.save(test);
-	}
-
-	//1
+	// 1
 	private void createCategoriesWithProducts() {
 		Random rand = new Random();
 		for (int i = 0; i < CATEGORYSIZE; i++) {
@@ -88,6 +84,12 @@ public class WebshopRunner implements CommandLineRunner {
 		}
 	}
 
+	// 2
+	private void createUser() {
+		User test = new User("Name", "mail@test.com", "addres", "password");
+		userRepository.save(test);
+	}
+
 	private List<Discount> createDailyDiscount() {
 		List<Discount> discounts = new ArrayList<>();
 		discounts.add(new DailyDiscount("0.1", Day.MONDAY));
@@ -99,31 +101,36 @@ public class WebshopRunner implements CommandLineRunner {
 		discounts.add(new DailyDiscount("0.1", Day.SUNDAY));
 		return discounts;
 	}
-	
-	//4
+
+	// 4
 	private void createCartWithProducts() {
 		User user = userRepository.findByEmail("mail@test.com");
 		Cart cart = new Cart(user);
-		
+
 		Product p1 = productRepository.findOne(1L);
 		Product p2 = productRepository.findOne(2L);
 		Product p3 = productRepository.findOne(3L);
 		Product p4 = productRepository.findOne(4L);
 		Product p5 = productRepository.findOne(5L);
-		
+
 		cart.putToCart(p1, 2);
 		cart.putToCart(p2, 5);
 		cart.putToCart(p3, 10);
 		cart.putToCart(p4, 1);
 		cart.putToCart(p5, 1);
-	
+
 		cartRepository.save(cart);
 	}
-	
-	//5
+
+	// 5
 	private void finalizeOrders() {
 		Cart cart = cartRepository.findByUserEmail("mail@test.com");
 		cartService.finalizeOrder(cart.getId());
+	}
+
+	// 6
+	private void listOrders() {
+		List<Order> orders = orderRepository.findByUserEmail("mail@test.com");
 	}
 
 }

@@ -9,5 +9,7 @@ import webshop.model.order.Order;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 	
 	List<Order> findByUserId(long userId);
+	
+	List<Order> findByUserEmail(String email);
 
 }
