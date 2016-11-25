@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import webshop.model.Cart;
 import webshop.model.Category;
 import webshop.model.Day;
 import webshop.model.Product;
 import webshop.model.discount.DailyDiscount;
 import webshop.model.discount.Discount;
 import webshop.model.user.User;
+import webshop.repository.CartRepository;
 import webshop.repository.CategoryRepository;
 import webshop.repository.ProductRepository;
 import webshop.repository.UserRepository;
@@ -28,6 +30,8 @@ public class WebshopRunner implements CommandLineRunner {
 	ProductRepository productRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	CartRepository cartRepository;
 
 	static final int CATEGORYSIZE = 10;
 	static final int PRODUCTSIZE = 100;
@@ -38,6 +42,8 @@ public class WebshopRunner implements CommandLineRunner {
 			createCategoriesWithProducts();
 		if (userRepository.count() == 0)
 			createUser();
+		if(cartRepository.count() == 0)
+			createCartWithProducts();
 
 		// TODO: insert and query data
 		// 1. Create 10 categories, with 100 products in each category
@@ -53,11 +59,14 @@ public class WebshopRunner implements CommandLineRunner {
 		// If it is possible, try to optimize those methods.
 	}
 
+	
+	//2
 	private void createUser() {
 		User test = new User("Name", "mail@test.com", "addres", "password");
 		userRepository.save(test);
 	}
 
+	//1
 	private void createCategoriesWithProducts() {
 		Random rand = new Random();
 		for (int i = 0; i < CATEGORYSIZE; i++) {
@@ -81,6 +90,26 @@ public class WebshopRunner implements CommandLineRunner {
 		discounts.add(new DailyDiscount("0.2", Day.SATURDAY));
 		discounts.add(new DailyDiscount("0.1", Day.SUNDAY));
 		return discounts;
+	}
+	
+	//4
+	private void createCartWithProducts() {
+		User user = userRepository.findByEmail("mail@test.com");
+		Cart cart = new Cart(user);
+		
+		Product p1 = productRepository.findOne(1L);
+		Product p2 = productRepository.findOne(2L);
+		Product p3 = productRepository.findOne(3L);
+		Product p4 = productRepository.findOne(4L);
+		Product p5 = productRepository.findOne(5L);
+		
+		cart.putToCart(p1, 2);
+		cart.putToCart(p2, 5);
+		cart.putToCart(p3, 10);
+		cart.putToCart(p4, 1);
+		cart.putToCart(p5, 1);
+	
+		cartRepository.save(cart);
 	}
 
 }
