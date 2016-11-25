@@ -122,7 +122,8 @@ public class WebshopRunner implements CommandLineRunner {
 	
 	//5
 	private void finalizeOrders() {
-		cartService.finalizeOrder(3L);
+		Cart cart = cartRepository.findByUserEmail("mail@test.com");
+		cartService.finalizeOrder(cart.getId());
 	}
 
 }
