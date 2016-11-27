@@ -30,6 +30,7 @@ import webshop.repository.UserRepository;
 import webshop.repository.discount.DailyDiscountRepository;
 import webshop.repository.discount.DiscountRepository;
 import webshop.repository.discount.TimedDiscountRepository;
+import webshop.repository.discount.UserDiscountRepository;
 import webshop.service.CartService;
 
 @Component
@@ -55,6 +56,8 @@ public class WebshopRunner implements CommandLineRunner {
 	DailyDiscountRepository dailyDiscountRepository;
 	@Autowired
 	TimedDiscountRepository timedDiscountRepository;
+	@Autowired
+	UserDiscountRepository userDiscountRepository;
 
 	static final int CATEGORYSIZE = 10;
 	static final int PRODUCTSIZE = 100;
@@ -116,32 +119,53 @@ public class WebshopRunner implements CommandLineRunner {
 		DailyDiscount dailyDisc=new DailyDiscount("0.1",Day.MONDAY);
 		TimedDiscount timedDisc=createTimedDiscount();
 		
-		dailyDiscountRepository.save(dailyDisc);
-		timedDiscountRepository.save(timedDisc);
-		discountRepository.save(basicDisc);
+		saveDiscounts(basicDisc, dailyDisc, timedDisc);
 		
 		//Create test category
 		Category discTestCategory=new Category("discTestCat");
 		
 		//Add discount to category
 		discTestCategory.addDiscount(basicDisc);
+		//Save category
 		categoryRepository.save(discTestCategory);
 		
-		//Create test product
+		saveProductWithDiscounts(basicDisc, dailyDisc, timedDisc, discTestCategory);
+		
+		createCombinedProduct();
+		
+		createUserDiscount();
+	}
+
+	private void saveDiscounts(Discount basicDisc, DailyDiscount dailyDisc, TimedDiscount timedDisc) {
+		dailyDiscountRepository.save(dailyDisc);
+		timedDiscountRepository.save(timedDisc);
+		discountRepository.save(basicDisc);
+	}
+
+	private void saveProductWithDiscounts(Discount basicDisc, DailyDiscount dailyDisc, TimedDiscount timedDisc,
+			Category discTestCategory) {
+		
 		Product testProduct=new Product("discTest",BigDecimal.valueOf(1000),discTestCategory);
 		
-		//Add discounts to product
 		testProduct.addDiscount(dailyDisc);
 		testProduct.addDiscount(basicDisc);
 		testProduct.addDiscount(timedDisc);
 		
 		productRepository.save(testProduct);
-		
-		//Find 2 products for CombinedProduct
+	}
+
+	private void createCombinedProduct() {
 		Product p1 = productRepository.findOne(1L);
 		Product p2 = productRepository.findOne(2L);
 		CombinedProduct combinedDisc=new CombinedProduct(p1, p2, BigDecimal.valueOf(10000));
 		combinedProductRepository.save(combinedDisc);
+	}
+
+	private void createUserDiscount() {
+		UserDiscount userD=new UserDiscount();
+		userD.setValue(BigDecimal.valueOf(0.1));
+		userD.setLimit(BigDecimal.valueOf(10000));
+		userDiscountRepository.save(userD);
 	}
 	
 	private TimedDiscount createTimedDiscount(){
