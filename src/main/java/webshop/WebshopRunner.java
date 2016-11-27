@@ -2,6 +2,7 @@ package webshop;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -11,17 +12,24 @@ import org.springframework.stereotype.Component;
 
 import webshop.model.Cart;
 import webshop.model.Category;
+import webshop.model.CombinedProduct;
 import webshop.model.Day;
 import webshop.model.Product;
 import webshop.model.discount.DailyDiscount;
 import webshop.model.discount.Discount;
+import webshop.model.discount.TimedDiscount;
+import webshop.model.discount.UserDiscount;
 import webshop.model.order.Order;
 import webshop.model.user.User;
 import webshop.repository.CartRepository;
 import webshop.repository.CategoryRepository;
+import webshop.repository.CombinedProductRepository;
 import webshop.repository.OrderRepository;
 import webshop.repository.ProductRepository;
 import webshop.repository.UserRepository;
+import webshop.repository.discount.DailyDiscountRepository;
+import webshop.repository.discount.DiscountRepository;
+import webshop.repository.discount.TimedDiscountRepository;
 import webshop.service.CartService;
 
 @Component
@@ -39,6 +47,14 @@ public class WebshopRunner implements CommandLineRunner {
 	OrderRepository orderRepository;
 	@Autowired
 	CartService cartService;
+	@Autowired
+	DiscountRepository discountRepository;
+	@Autowired
+	CombinedProductRepository combinedProductRepository;
+	@Autowired
+	DailyDiscountRepository dailyDiscountRepository;
+	@Autowired
+	TimedDiscountRepository timedDiscountRepository;
 
 	static final int CATEGORYSIZE = 10;
 	static final int PRODUCTSIZE = 100;
@@ -53,8 +69,11 @@ public class WebshopRunner implements CommandLineRunner {
 			createCartWithProducts();
 		if (orderRepository.count() == 0)
 			finalizeOrders();
-
+		if(discountRepository.count()== 0)
+			createEachDiscount();
+		
 		listOrders();
+						
 
 		// TODO: insert and query data
 		// 1. Create 10 categories, with 100 products in each category
@@ -89,6 +108,50 @@ public class WebshopRunner implements CommandLineRunner {
 		User test = new User("Name", "mail@test.com", "addres", "password");
 		userRepository.save(test);
 	}
+	
+	//3
+	private void createEachDiscount(){
+		//Create discounts
+		Discount basicDisc=new Discount("0.3");
+		DailyDiscount dailyDisc=new DailyDiscount("0.1",Day.MONDAY);
+		TimedDiscount timedDisc=createTimedDiscount();
+		
+		dailyDiscountRepository.save(dailyDisc);
+		timedDiscountRepository.save(timedDisc);
+		discountRepository.save(basicDisc);
+		
+		//Create test category
+		Category discTestCategory=new Category("discTestCat");
+		
+		//Add discount to category
+		discTestCategory.addDiscount(basicDisc);
+		categoryRepository.save(discTestCategory);
+		
+		//Create test product
+		Product testProduct=new Product("discTest",BigDecimal.valueOf(1000),discTestCategory);
+		
+		//Add discounts to product
+		testProduct.addDiscount(dailyDisc);
+		testProduct.addDiscount(basicDisc);
+		testProduct.addDiscount(timedDisc);
+		
+		productRepository.save(testProduct);
+		
+		//Find 2 products for CombinedProduct
+		Product p1 = productRepository.findOne(1L);
+		Product p2 = productRepository.findOne(2L);
+		CombinedProduct combinedDisc=new CombinedProduct(p1, p2, BigDecimal.valueOf(10000));
+		combinedProductRepository.save(combinedDisc);
+	}
+	
+	private TimedDiscount createTimedDiscount(){
+		Date now = new Date();
+		Date before = (Date) now.clone();
+		before.setYear(now.getYear() - 1);
+		Date after = (Date) now.clone();
+		after.setYear(now.getYear() + 1);
+		return new TimedDiscount("0.3", before, after);
+	}
 
 	private List<Discount> createDailyDiscount() {
 		List<Discount> discounts = new ArrayList<>();
@@ -120,6 +183,7 @@ public class WebshopRunner implements CommandLineRunner {
 		cart.putToCart(p5, 1);
 
 		cartRepository.save(cart);
+		
 	}
 
 	// 5
