@@ -77,6 +77,7 @@ public class WebshopRunner implements CommandLineRunner {
 		
 		listOrders();
 						
+		
 
 		// TODO: insert and query data
 		// 1. Create 10 categories, with 100 products in each category
@@ -175,18 +176,6 @@ public class WebshopRunner implements CommandLineRunner {
 		Date after = (Date) now.clone();
 		after.setYear(now.getYear() + 1);
 		return new TimedDiscount("0.3", before, after);
-	}
-
-	private List<Discount> createDailyDiscount() {
-		List<Discount> discounts = new ArrayList<>();
-		discounts.add(new DailyDiscount("0.1", Day.MONDAY));
-		discounts.add(new DailyDiscount("0.3", Day.TUESDAY));
-		discounts.add(new DailyDiscount("0.15", Day.WEDNESDAY));
-		discounts.add(new DailyDiscount("0.05", Day.THURSDAY));
-		discounts.add(new DailyDiscount("0.12", Day.FRIDAY));
-		discounts.add(new DailyDiscount("0.2", Day.SATURDAY));
-		discounts.add(new DailyDiscount("0.1", Day.SUNDAY));
-		return discounts;
 	}
 
 	// 4
