@@ -16,7 +16,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home(Map<String, Object> model){
-		model.put("productCount", productRepository.findAll().size());
+		model.put("productCount", productRepository.countAllProducts());
 		return "index";
 	}
 	
