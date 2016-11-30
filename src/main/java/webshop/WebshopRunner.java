@@ -1,9 +1,7 @@
 package webshop;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import webshop.model.discount.DailyDiscount;
 import webshop.model.discount.Discount;
 import webshop.model.discount.TimedDiscount;
 import webshop.model.discount.UserDiscount;
-import webshop.model.order.Order;
 import webshop.model.user.User;
 import webshop.repository.CartRepository;
 import webshop.repository.CategoryRepository;
@@ -207,7 +204,7 @@ public class WebshopRunner implements CommandLineRunner {
 
 	// 6
 	private void listOrders() {
-		List<Order> orders = orderRepository.findByUserEmail("mail@test.com");
+		orderRepository.findByUserEmail("mail@test.com");
 	}
 
 }
